@@ -1,0 +1,182 @@
+[
+    {
+        "CNP": "1960101123456",
+        "Nume": "Popescu",
+        "Prenume": "Andrei",
+        "Varsta": 29,
+        "Salar": 4500,
+        "Departament": "IT",
+        "Senioritate": "mid"
+    },
+    {
+        "CNP": "2950502234567",
+        "Nume": "Ionescu",
+        "Prenume": "Maria",
+        "Varsta": 30,
+        "Salar": 5200,
+        "Departament": "HR",
+        "Senioritate": "senior"
+    },
+    {
+        "CNP": "1980703345678",
+        "Nume": "Georgescu",
+        "Prenume": "Mihai",
+        "Varsta": 69,
+        "Salar": 4000,
+        "Departament": "Marketing",
+        "Senioritate": "mid"
+    },
+    {
+        "CNP": "6020814456789",
+        "Nume": "Dumitrescu",
+        "Prenume": "Elena",
+        "Varsta": 24,
+        "Salar": 3500,
+        "Departament": "Financiar",
+        "Senioritate": "junior"
+    },
+    {
+        "CNP": "1970905567890",
+        "Nume": "Popa",
+        "Prenume": "Alexandru",
+        "Varsta": 33,
+        "Salar": 6000,
+        "Departament": "IT",
+        "Senioritate": "senior"
+    },
+    {
+        "CNP": "2961016678901",
+        "Nume": "Stan",
+        "Prenume": "Ioana",
+        "Varsta": 28,
+        "Salar": 4700,
+        "Departament": "Vanzari",
+        "Senioritate": "mid"
+    },
+    {
+        "CNP": "1951127789012",
+        "Nume": "Marin",
+        "Prenume": "Cristian",
+        "Varsta": 31,
+        "Salar": 5500,
+        "Departament": "Logistica",
+        "Senioritate": "senior"
+    },
+    {
+        "CNP": "2971208890123",
+        "Nume": "Voicu",
+        "Prenume": "Alina",
+        "Varsta": 26,
+        "Salar": 3800,
+        "Departament": "IT",
+        "Senioritate": "junior"
+    },
+    {
+        "CNP": "1980112991234",
+        "Nume": "Morar",
+        "Prenume": "Daniel",
+        "Varsta": 35,
+        "Salar": 6200,
+        "Departament": "Management",
+        "Senioritate": "senior"
+    },
+    {
+        "CNP": "2990213102345",
+        "Nume": "Radu",
+        "Prenume": "Bianca",
+        "Varsta": 23,
+        "Salar": 3400,
+        "Departament": "Marketing",
+        "Senioritate": "junior"
+    },
+    {
+        "CNP": "1970314213456",
+        "Nume": "Barbu",
+        "Prenume": "Paul",
+        "Varsta": 32,
+        "Salar": 5800,
+        "Departament": "Financiar",
+        "Senioritate": "senior"
+    },
+    {
+        "CNP": "2960415324567",
+        "Nume": "Tudor",
+        "Prenume": "Raluca",
+        "Varsta": 27,
+        "Salar": 4200,
+        "Departament": "HR",
+        "Senioritate": "mid"
+    },
+    {
+        "CNP": "1980516435678",
+        "Nume": "Neagu",
+        "Prenume": "Vlad",
+        "Varsta": 30,
+        "Salar": 5100,
+        "Departament": "IT",
+        "Senioritate": "mid"
+    },
+    {
+        "CNP": "2990617546789",
+        "Nume": "Florea",
+        "Prenume": "Diana",
+        "Varsta": 25,
+        "Salar": 3600,
+        "Departament": "Vanzari",
+        "Senioritate": "junior"
+    },
+    {
+        "CNP": "1960718657890",
+        "Nume": "Preda",
+        "Prenume": "Sorin",
+        "Varsta": 34,
+        "Salar": 6100,
+        "Departament": "Logistica",
+        "Senioritate": "senior"
+    },
+    {
+        "CNP": "2970819768901",
+        "Nume": "Enache",
+        "Prenume": "Laura",
+        "Varsta": 26,
+        "Salar": 3900,
+        "Departament": "Financiar",
+        "Senioritate": "junior"
+    },
+    {
+        "CNP": "1950920879012",
+        "Nume": "Ilie",
+        "Prenume": "Gabriel",
+        "Varsta": 36,
+        "Salar": 6500,
+        "Departament": "Management",
+        "Senioritate": "senior"
+    },
+    {
+        "CNP": "2981021980123",
+        "Nume": "Mihalache",
+        "Prenume": "Adina",
+        "Varsta": 28,
+        "Salar": 4400,
+        "Departament": "Marketing",
+        "Senioritate": "mid"
+    },
+    {
+        "CNP": "1971122091234",
+        "Nume": "Sandu",
+        "Prenume": "Robert",
+        "Varsta": 31,
+        "Salar": 5700,
+        "Departament": "IT",
+        "Senioritate": "senior"
+    },
+    {
+        "CNP": "2991223102345",
+        "Nume": "Lazar",
+        "Prenume": "Monica",
+        "Varsta": 24,
+        "Salar": 3300,
+        "Departament": "HR",
+        "Senioritate": "junior"
+    }
+]
