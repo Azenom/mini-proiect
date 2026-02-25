@@ -1,108 +1,64 @@
-"""
-Sa se scrie un program care tine evidenta angajatilor dintr-o companie.
-Informatiile pe care trebuie sa le retinem despre un angajat sunt urmatoarele:
-	1) CNP
-	2) Nume
-	3) Prenume
-	4) Varsta
-	5) Salar
-	6) Departament
-	7) Senioritate (junior, mid, senior)
-
-Programul trebuie sa dispuna de un meniu care ne permite sa efectuam urmatoarele actiuni:
-	1) Adaugare angajat                          - in prog
-	2) Cautare angajat (dupa CNP)                - in fisier
-	3) Modificare date angajat (dupa CNP)        - in fisier
-	4) Stergere angajat (dupa CNP)               - in fisier
-	5) Afisare angajati                          - din fisier
-	6) Calcul cost total salarii companie        - in prog
-	7) Calcul cost total salarii departament     - in prog
-	8) Calcul fluturas salar angajat (dupa CNP)  - in fisier .py ( modul )
-    Formula : Salariu Net = Salariu Brut - CAS (25%) - CASS (10%) - Impozit ( 10% din (Salariu Brut - CAS (25%) - CASS (10%) ) )
-    9) Afisarea angajatilor pe baza senioritatii - in fisier
-	10) Afisarea angajatilor pe baza departamentului - in fisier
-	11) Iesire
-
-Informatiile despre angajati trebuie sa fie stocate intr-un fisier astfel incat sa poata fi accesate si modificate ulterior.
-
-Criterii notare:
-    - 0.5p  documentare cod (docstrings, comentarii)
-    - 0.5p  type hints
-    - 1p    modularitate (impartirea codului in functii, module, etc)
-    - 1p    naming conventions (denumire variabile, denumire functii, etc)
-    - 1p    error handling (try-except, validare integritate date *, etc)
-    - 1p    salvarea datelor intr-un fisier (citire/scriere) - punctul 9, 10
-    - 0.5p  adaugare angajati
-    - 0.5p  afisare angajati
-    - 0.5p  cautare angajat
-    - 0.5p  modificare date angajat
-    - 0.5p  stergere angajat
-    - 0.5p  calcul cost total salarii companie
-    - 0.5p  calcul cost total salarii departament
-    - 0.5p  calcul fluturas salarial
-    - 0.5p  afisarea angajatilor pe baza senioritatii
-    - 0.5p  afisarea angajatilor pe baza departamentului
-
-	* Verificare integriatate date (parametrii introdusi sa fie corespunzatori)
-		- Exemple:
-			- CNP sa fie de lungime corespunzatoare si sa contina doar cifre
-			- Varsta sa fie mai mare de 18 ani
-			- Salarul sa fie mai mare decat minimul pe economie (4050)
-			- etc
-
-Termen limita: Sambata 6 martie 2026 ora 23:59
-Lucrul in echipa pentru acest proiect este permis, dar fiecare membru trebuie sa predea o versiune individuala a proiectului,
-care sa fie diferita de cea a colegilor sai (de exemplu, prin adaugarea unor functionalitati suplimentare sau prin implementarea intr-un mod diferit a functionalitatilor cerute).
-Pentru persoanele care depasesc termenul limita se vor scadea cate 0.25p pentru fiecare zi de intarziere.
-Maximul de zile de intarziere este de 14 zile, dupa care proiectul nu va mai fi acceptat, iar nota va fi 1.
-"""
-
 import os, json
 persoane = [{"CNP":"1960101123456","Nume":"Popescu","Prenume":"Andrei","Varsta":29,"Salar":4500,"Departament":"IT","Senioritate":"mid"},{"CNP":"2950502234567","Nume":"Ionescu","Prenume":"Maria","Varsta":30,"Salar":5200,"Departament":"HR","Senioritate":"senior"},{"CNP":"1980703345678","Nume":"Georgescu","Prenume":"Mihai","Varsta":27,"Salar":4000,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"6020814456789","Nume":"Dumitrescu","Prenume":"Elena","Varsta":24,"Salar":3500,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1970905567890","Nume":"Popa","Prenume":"Alexandru","Varsta":33,"Salar":6000,"Departament":"IT","Senioritate":"senior"},{"CNP":"2961016678901","Nume":"Stan","Prenume":"Ioana","Varsta":28,"Salar":4700,"Departament":"Vanzari","Senioritate":"mid"},{"CNP":"1951127789012","Nume":"Marin","Prenume":"Cristian","Varsta":31,"Salar":5500,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2971208890123","Nume":"Voicu","Prenume":"Alina","Varsta":26,"Salar":3800,"Departament":"IT","Senioritate":"junior"},{"CNP":"1980112991234","Nume":"Morar","Prenume":"Daniel","Varsta":35,"Salar":6200,"Departament":"Management","Senioritate":"senior"},{"CNP":"2990213102345","Nume":"Radu","Prenume":"Bianca","Varsta":23,"Salar":3400,"Departament":"Marketing","Senioritate":"junior"},{"CNP":"1970314213456","Nume":"Barbu","Prenume":"Paul","Varsta":32,"Salar":5800,"Departament":"Financiar","Senioritate":"senior"},{"CNP":"2960415324567","Nume":"Tudor","Prenume":"Raluca","Varsta":27,"Salar":4200,"Departament":"HR","Senioritate":"mid"},{"CNP":"1980516435678","Nume":"Neagu","Prenume":"Vlad","Varsta":30,"Salar":5100,"Departament":"IT","Senioritate":"mid"},{"CNP":"2990617546789","Nume":"Florea","Prenume":"Diana","Varsta":25,"Salar":3600,"Departament":"Vanzari","Senioritate":"junior"},{"CNP":"1960718657890","Nume":"Preda","Prenume":"Sorin","Varsta":34,"Salar":6100,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2970819768901","Nume":"Enache","Prenume":"Laura","Varsta":26,"Salar":3900,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1950920879012","Nume":"Ilie","Prenume":"Gabriel","Varsta":36,"Salar":6500,"Departament":"Management","Senioritate":"senior"},{"CNP":"2981021980123","Nume":"Mihalache","Prenume":"Adina","Varsta":28,"Salar":4400,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"1971122091234","Nume":"Sandu","Prenume":"Robert","Varsta":31,"Salar":5700,"Departament":"IT","Senioritate":"senior"},{"CNP":"2991223102345","Nume":"Lazar","Prenume":"Monica","Varsta":24,"Salar":3300,"Departament":"HR","Senioritate":"junior"}]
 # persoane = []
 
 #codul merge - verifica daca fisierul exista ca sa nu suprascriem apoi adauga/scrie persoane in lista ca si dictionare
 def adauga_persoane ():
+    # Încarcă lista existentă sau creează una nouă
     if os.path.exists("lista_angajati.json"):
-        with open("lista_angajati.json", "r") as f:
-            persoane = json.load(f)
+        with open("lista_angajati.json", "r") as my_file:
+            persoane = json.load(my_file)
+    else:
+        persoane = []
     flag = True
-    while flag == True : 
+    while flag:
+        # CNP ----------------------
         while True:
-            cnp = input("CNP: ")    
+            cnp = input("CNP: ")
+            if cnp.isdigit() and len(cnp) == 13:
+                break
+            print("CNP invalid! Trebuie sa aiba exact 13 cifre și să fie doar numere.")
+        # Nume și prenume ----------------------
+        nume = input("Nume: ").capitalize()
+        prenume = input("Prenume: ").capitalize()
+        # Varsta ----------------------
+        while True:
             try:
-                int(cnp)  # verifică dacă sunt doar cifre        
-                if len(cnp) == 13:
-                    break
-                else:
-                    print("CNP invalid! Trebuie sa aiba exact 13 cifre.")
+                varsta = int(input("Varsta: "))
+                break
             except ValueError:
-                print("CNP invalid! Trebuie sa contina doar cifre.")
-        nume = input("Nume : ")
-        prenume = input("Prenume : ")
-        try:
-            varsta = int(input("Varsta : "))
-            salariu = float(input("Salariu : "))
-        except ValueError:
-            print("Varsta si salariu trebuie sa fie numere !")
-            continue
-        departament = input("Departament : ")
-        senioritate = input("Senioritate (Junior, Did, Senior) : ")
+                print("Varsta trebuie sa fie un numar!")
+        # Salariu cu minim ----------------------
+        while True:
+            try:
+                salariu = float(input("Salariu: "))
+                if salariu < 4050:
+                    print("Salariul trebuie sa fie mai mare ca minimul pe economie (4050)")
+                    continue
+                break
+            except ValueError:
+                print("Salariu trebuie sa fie un numar!")
+        # Departament și senioritate ----------------------
+        departament = input("Departament: ").capitalize()
+        senioritate = input("Senioritate (Junior, Mid, Senior): ").capitalize()
+        # Creează obiectul persoana și îl adaugă în listă ----------------------
         persoana = {
             "CNP": cnp,
-            "Nume": nume.capitalize(),
-            "Prenume": prenume.capitalize(),
-            "Varsta" : varsta,
-            "Salariu" : salariu,
-            "Departament" : departament.capitalize(),
-            "Senioritate" : senioritate.capitalize()
+            "Nume": nume,
+            "Prenume": prenume,
+            "Varsta": varsta,
+            "Salariu": salariu,
+            "Departament": departament,
+            "Senioritate": senioritate
         }
         persoane.append(persoana)
-        with open ('lista_angajati.json','w') as my_file :
-            json.dump(persoane,my_file, indent = 4)
-        opt = input("Doresti sa mai adaugi persoane ? Da / Nu : ")
-        if opt.strip().lower() == "nu" : 
-            print('Datele au fost salvate, te vei intoarce la meniul principal ! ')
+        # Salvează în JSON ----------------------
+        with open("lista_angajati.json", "w") as my_file:
+            json.dump(persoane, my_file, indent=4)
+        # Continuare ----------------------
+        opt = input("Doresti sa mai adaugi persoane? Da / Nu: ").strip().lower()
+        if opt == "nu":
+            print("Datele au fost salvate, te vei intoarce la meniul principal!")
             flag = False
 
 # codul merge - stie sa caute si sa afiseze persoana cautata            
@@ -194,25 +150,42 @@ def stergere_persoane(cauta):
     with open ('lista_angajati.json','w') as my_file :
             json.dump(date,my_file, indent = 4)
 
-def calcul():
-    print()
+def calcul_total():
+    with open ('lista_angajati.json','r') as my_file :
+        date = json.load(my_file)
+    suma = 0
+    for elem in date :
+        suma += elem["Salar"]
+    print(suma)
 
-
-print(
-    """
-	1) Adaugare angajat
-	2) Cautare angajat (dupa CNP)
-	3) Modificare date angajat (dupa CNP)
-	4) Stergere angajat (dupa CNP)
-	5) Afisare angajati
-	6) Calcul cost total salarii companie
-	7) Calcul cost total salarii departament
-	8) Calcul fluturas salar angajat (dupa CNP)
-	9) Afisarea angajatilor pe baza senioritatii
-	10) Afisarea angajatilor pe baza departamentului
-	11) Iesire - apasa 0
-    """
-        ) 
+def calcul_dep():
+    with open ('lista_angajati.json','r') as my_file :
+        date = json.load(my_file)
+    sal_dep={}
+    for elem in date :
+        dep = elem["Departament"]
+        sal = elem["Salar"]
+        if dep not in sal_dep:
+            sal_dep[dep] = 0
+        sal_dep[dep] += sal
+    for dep, total in sal_dep.items():
+        print(f'Departamentul : {dep} are {total} ron in salarii')
+        
+# print(
+#     """
+# 	1) Adaugare angajat
+# 	2) Cautare angajat (dupa CNP)
+# 	3) Modificare date angajat (dupa CNP)
+# 	4) Stergere angajat (dupa CNP)
+# 	5) Afisare angajati
+# 	6) Calcul cost total salarii companie
+# 	7) Calcul cost total salarii departament
+# 	8) Calcul fluturas salar angajat (dupa CNP)
+# 	9) Afisarea angajatilor pe baza senioritatii
+# 	10) Afisarea angajatilor pe baza departamentului
+# 	11) Iesire - apasa 0
+#     """
+#         ) 
 while True :
     optiune = input("Alege optiune : ")
     if optiune == '0' :
@@ -246,6 +219,8 @@ while True :
         with open ('lista_angajati.json','r') as my_file :
             date = json.load(my_file)
             print(json.dumps(date, indent=4))
-    if optiune == 6 :
-        continue
+    if optiune == '6' :
+        print('Calcul cost total salarii companie : ',calcul_total())
+    if optiune == '7' :        
+        calcul_dep()
         
