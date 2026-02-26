@@ -199,15 +199,17 @@ def fluturas (cauta):
 
 
 def depart (cauta) :
+    date = functie_citire()
+    departamente = list({elem["Departament"] for elem in date})
+    print(departamente)
     lista = []
+    cauta = input("Introdu departamentul cautat : ")
     for dep in departamente :
         if cauta.capitalize() == dep or ( len(cauta)<3 and dep == cauta.upper() ) or dep == cauta:
             for elem in date :
                 if elem["Departament"] == dep:
                     nume_prenume = elem['Nume']+ ' ' + elem['Prenume']
                     lista.append(nume_prenume)
-        else :
-            print
 
     path = 'fisiere_output/departament.csv'
     exista_fisier = os.path.exists(path) # boolean
@@ -266,9 +268,10 @@ while True :
             else : 
                 print(f'CNP-ul : {cauta} nu are toate cifrele')
     if optiune == '9' :
+        # Aici functia afisare pe baza senioritatii
         continue
     if optiune == '10':
-        date = functie_citire()
-        departamente = list({elem["Departament"] for elem in date})
-        print(departamente)
-        cauta = input("Introdu departamentul cautat : ")
+        continue
+                
+
+
