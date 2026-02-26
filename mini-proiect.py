@@ -1,13 +1,16 @@
-import os, json
+import os, json, csv 
+from functii_ajutor.citire_scriere import functie_citire, functie_scriere
+from functii_ajutor.meniu_optiuni import functie_meniu
+from datetime import datetime
+
 persoane = [{"CNP":"1960101123456","Nume":"Popescu","Prenume":"Andrei","Varsta":29,"Salar":4500,"Departament":"IT","Senioritate":"mid"},{"CNP":"2950502234567","Nume":"Ionescu","Prenume":"Maria","Varsta":30,"Salar":5200,"Departament":"HR","Senioritate":"senior"},{"CNP":"1980703345678","Nume":"Georgescu","Prenume":"Mihai","Varsta":27,"Salar":4000,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"6020814456789","Nume":"Dumitrescu","Prenume":"Elena","Varsta":24,"Salar":3500,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1970905567890","Nume":"Popa","Prenume":"Alexandru","Varsta":33,"Salar":6000,"Departament":"IT","Senioritate":"senior"},{"CNP":"2961016678901","Nume":"Stan","Prenume":"Ioana","Varsta":28,"Salar":4700,"Departament":"Vanzari","Senioritate":"mid"},{"CNP":"1951127789012","Nume":"Marin","Prenume":"Cristian","Varsta":31,"Salar":5500,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2971208890123","Nume":"Voicu","Prenume":"Alina","Varsta":26,"Salar":3800,"Departament":"IT","Senioritate":"junior"},{"CNP":"1980112991234","Nume":"Morar","Prenume":"Daniel","Varsta":35,"Salar":6200,"Departament":"Management","Senioritate":"senior"},{"CNP":"2990213102345","Nume":"Radu","Prenume":"Bianca","Varsta":23,"Salar":3400,"Departament":"Marketing","Senioritate":"junior"},{"CNP":"1970314213456","Nume":"Barbu","Prenume":"Paul","Varsta":32,"Salar":5800,"Departament":"Financiar","Senioritate":"senior"},{"CNP":"2960415324567","Nume":"Tudor","Prenume":"Raluca","Varsta":27,"Salar":4200,"Departament":"HR","Senioritate":"mid"},{"CNP":"1980516435678","Nume":"Neagu","Prenume":"Vlad","Varsta":30,"Salar":5100,"Departament":"IT","Senioritate":"mid"},{"CNP":"2990617546789","Nume":"Florea","Prenume":"Diana","Varsta":25,"Salar":3600,"Departament":"Vanzari","Senioritate":"junior"},{"CNP":"1960718657890","Nume":"Preda","Prenume":"Sorin","Varsta":34,"Salar":6100,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2970819768901","Nume":"Enache","Prenume":"Laura","Varsta":26,"Salar":3900,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1950920879012","Nume":"Ilie","Prenume":"Gabriel","Varsta":36,"Salar":6500,"Departament":"Management","Senioritate":"senior"},{"CNP":"2981021980123","Nume":"Mihalache","Prenume":"Adina","Varsta":28,"Salar":4400,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"1971122091234","Nume":"Sandu","Prenume":"Robert","Varsta":31,"Salar":5700,"Departament":"IT","Senioritate":"senior"},{"CNP":"2991223102345","Nume":"Lazar","Prenume":"Monica","Varsta":24,"Salar":3300,"Departament":"HR","Senioritate":"junior"}]
 # persoane = []
 
-#codul merge - verifica daca fisierul exista ca sa nu suprascriem apoi adauga/scrie persoane in lista ca si dictionare
+# codul merge - verifica daca fisierul exista ca sa nu suprascriem apoi adauga/scrie persoane in lista ca si dictionare
 def adauga_persoane ():
-    # Încarcă lista existentă sau creează una nouă
+    # Verifica daca fisierul exista si daca da Încarcă lista existentă sau daca nu creează creaza o lista noua
     if os.path.exists("lista_angajati.json"):
-        with open("lista_angajati.json", "r") as my_file:
-            persoane = json.load(my_file)
+        persoane = functie_citire()
     else:
         persoane = []
     flag = True
@@ -41,7 +44,7 @@ def adauga_persoane ():
         # Departament și senioritate ----------------------
         departament = input("Departament: ").capitalize()
         senioritate = input("Senioritate (Junior, Mid, Senior): ").capitalize()
-        # Creează obiectul persoana și îl adaugă în listă ----------------------
+        # Creează dictionarul persoana și îl adaugă în listă ----------------------
         persoana = {
             "CNP": cnp,
             "Nume": nume,
@@ -53,9 +56,8 @@ def adauga_persoane ():
         }
         persoane.append(persoana)
         # Salvează în JSON ----------------------
-        with open("lista_angajati.json", "w") as my_file:
-            json.dump(persoane, my_file, indent=4)
-        # Continuare ----------------------
+        functie_scriere(persoane)
+        # Continuare daca se doreste ----------------------
         opt = input("Doresti sa mai adaugi persoane? Da / Nu: ").strip().lower()
         if opt == "nu":
             print("Datele au fost salvate, te vei intoarce la meniul principal!")
@@ -63,8 +65,7 @@ def adauga_persoane ():
 
 # codul merge - stie sa caute si sa afiseze persoana cautata            
 def cauta_persoane (cauta):
-    with open ('lista_angajati.json','r') as my_file :
-        date = json.load(my_file)
+    date = functie_citire()
     for elem in date :
         if elem['CNP'] == cauta :
             print(elem)
@@ -74,8 +75,7 @@ def cauta_persoane (cauta):
 
 # codul merge - stie sa modifice fiecare informatie al angajatului daca se doreste
 def modificare_persoane (cauta):
-    with open ('lista_angajati.json','r') as my_file :
-        date = json.load(my_file)
+    date = functie_citire()
     for elem in date : 
         if elem['CNP'] == cauta :
             while True : 
@@ -136,31 +136,28 @@ def modificare_persoane (cauta):
                             print('Senioritate modficata !')
                         else :
                             print('Senioritatea trebuie sa fie formata din litere')
-    with open ('lista_angajati.json','w') as my_file :
-            json.dump(date,my_file, indent = 4)
+    functie_scriere(date)
 
 # codul merge - stie sa stearga persoana cu toate detaliile ei din dictionar si sa o si afiseze 
 def stergere_persoane(cauta):
-    with open ('lista_angajati.json','r') as my_file :
-        date = json.load(my_file)
+    date = functie_citire()
     for elem in date : 
         if elem['CNP'] == cauta :
             print(f'Persoana : {elem["Nume"]} {elem["Prenume"]} a fost stearsa !')
             elem.clear()
-    with open ('lista_angajati.json','w') as my_file :
-            json.dump(date,my_file, indent = 4)
+    functie_scriere(date)
 
+# codul merge - stie sa calculeze totaul de salarii din companie
 def calcul_total():
-    with open ('lista_angajati.json','r') as my_file :
-        date = json.load(my_file)
+    date = functie_citire()
     suma = 0
     for elem in date :
         suma += elem["Salar"]
     print(suma)
 
+# codul merge - stie sa calculeze si sa afiseze salariile totale pe departament
 def calcul_dep():
-    with open ('lista_angajati.json','r') as my_file :
-        date = json.load(my_file)
+    date = functie_citire()
     sal_dep={}
     for elem in date :
         dep = elem["Departament"]
@@ -170,22 +167,60 @@ def calcul_dep():
         sal_dep[dep] += sal
     for dep, total in sal_dep.items():
         print(f'Departamentul : {dep} are {total} ron in salarii')
-        
-# print(
-#     """
-# 	1) Adaugare angajat
-# 	2) Cautare angajat (dupa CNP)
-# 	3) Modificare date angajat (dupa CNP)
-# 	4) Stergere angajat (dupa CNP)
-# 	5) Afisare angajati
-# 	6) Calcul cost total salarii companie
-# 	7) Calcul cost total salarii departament
-# 	8) Calcul fluturas salar angajat (dupa CNP)
-# 	9) Afisarea angajatilor pe baza senioritatii
-# 	10) Afisarea angajatilor pe baza departamentului
-# 	11) Iesire - apasa 0
-#     """
-#         ) 
+
+# codul merge - stie sa calculeze salariul net si sa faca o lista cu nume+prenume, cnp, salariul net, data curenta
+# Formula : Salariu Net = Salariu Brut - CAS (25%) - CASS (10%) - Impozit ( 10% din (Salariu Brut - CAS (25%) - CASS (10%) ) )
+def fluturas (cauta):
+    persoane = functie_citire()
+    date = []
+    for elem in persoane : 
+        if elem['CNP']== cauta :
+            # unesc nume si prenume intr-o singura variabila
+            nume_prenume = elem['Nume'] + " " + elem["Prenume"]
+            salariu = elem['Salar']
+            # calculez salariul net si apoi il converstc in str ca sa apara si cuvantul : ron la final
+            salar = salariu - 0.25 * salariu - 0.1 * salariu - 0.1 * (salariu - 0.25 * salariu - 0.1 * salariu)
+            salariu_net = str(salar) + " ron"
+            # adaug si data la final de lista ce contine nume si prenume, cnp, salariul net, data curenta
+            data_curenta = datetime.now().strftime('%H:%M %d-%m-%Y')
+            date.append([nume_prenume, elem['CNP'], salariu_net, data_curenta])
+    # specific in ce folder sa scrie fisierul
+    path = 'fisiere_output/fluturas.csv'
+    exista_fisier = os.path.exists(path) # boolean
+    with open(path, 'a', newline='', encoding='utf-8') as my_file:
+        writer = csv.writer(my_file)
+        if not exista_fisier or os.path.getsize(path) == 0:     
+            # scriu header-ul doar dacă fișierul nu există sau este gol
+            writer.writerow(["Nume Prenume", "CNP", "Salariu Net", "Data Curenta"])
+        writer.writerows(date)
+    print(f'Verifica fisierul din {os.path.abspath(path)} pentru detalii!')
+
+# in progress ....
+
+
+def depart (cauta) :
+    lista = []
+    for dep in departamente :
+        if cauta.capitalize() == dep or ( len(cauta)<3 and dep == cauta.upper() ) or dep == cauta:
+            for elem in date :
+                if elem["Departament"] == dep:
+                    nume_prenume = elem['Nume']+ ' ' + elem['Prenume']
+                    lista.append(nume_prenume)
+        else :
+            print
+
+    path = 'fisiere_output/departament.csv'
+    exista_fisier = os.path.exists(path) # boolean
+    with open(path, 'a', newline='', encoding='utf-8') as my_file:
+        writer = csv.writer(my_file)
+        if not exista_fisier or os.path.getsize(path) == 0:     
+            # scriu header-ul doar dacă fișierul nu există sau este gol
+            writer.writerow(["Nume Prenume", cauta.capitalize()])
+        writer.writerows(lista)
+    print(f'Verifica fisierul din {os.path.abspath(path)} pentru detalii!')
+
+# Meniul principal ------------------------------------------------------
+# functie_meniu()
 while True :
     optiune = input("Alege optiune : ")
     if optiune == '0' :
@@ -216,11 +251,24 @@ while True :
         cauta = input("Intordu cnp-ul persoanei pe care vrei sa o stergi : ")
         stergere_persoane(cauta)
     if optiune == '5' :
-        with open ('lista_angajati.json','r') as my_file :
-            date = json.load(my_file)
-            print(json.dumps(date, indent=4))
+        date = functie_citire()
+        print(json.dumps(date, indent=4))
     if optiune == '6' :
         print('Calcul cost total salarii companie : ',calcul_total())
     if optiune == '7' :        
         calcul_dep()
-        
+    if optiune == '8' :
+        while True :
+            cauta = input("Introdu cnp-ul cautat : ")
+            if len(cauta) == 13 :
+                fluturas (cauta)
+                break
+            else : 
+                print(f'CNP-ul : {cauta} nu are toate cifrele')
+    if optiune == '9' :
+        continue
+    if optiune == '10':
+        date = functie_citire()
+        departamente = list({elem["Departament"] for elem in date})
+        print(departamente)
+        cauta = input("Introdu departamentul cautat : ")
