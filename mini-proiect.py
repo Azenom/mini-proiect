@@ -198,7 +198,7 @@ def fluturas (cauta):
 # in progress ....
 
 
-def depart (cauta) :
+def depart () :
     date = functie_citire()
     departamente = list({elem["Departament"] for elem in date})
     print(departamente)
@@ -213,12 +213,13 @@ def depart (cauta) :
 
     path = 'fisiere_output/departament.csv'
     exista_fisier = os.path.exists(path) # boolean
-    with open(path, 'a', newline='', encoding='utf-8') as my_file:
+    with open(path, 'w', newline='', encoding='utf-8') as my_file:
         writer = csv.writer(my_file)
         if not exista_fisier or os.path.getsize(path) == 0:     
             # scriu header-ul doar dacă fișierul nu există sau este gol
             writer.writerow(["Nume Prenume", cauta.capitalize()])
-        writer.writerows(lista)
+        for elem in lista :
+            writer.writerow([elem])
     print(f'Verifica fisierul din {os.path.abspath(path)} pentru detalii!')
 
 # Meniul principal ------------------------------------------------------
@@ -271,7 +272,7 @@ while True :
         # Aici functia afisare pe baza senioritatii
         continue
     if optiune == '10':
-        continue
+        depart()
                 
 
 
