@@ -123,6 +123,72 @@ def stergere_persoane(cauta: str) -> None:
         print(f'Nu s-a gasit persoana cu CNP: {cauta}')
     functie_scriere(date_noi)
 
+def adauga_persoane() -> None:
+    """
+    Permite adăugarea manuală a unei persoane în lista de angajați.
+    Verifică validitatea datelor (CNP, varsta, salariu, senioritate) și salvează lista actualizată în JSON.
+    """
+    # Verifica daca fisierul exista si daca da Încarcă lista existentă sau daca nu creează creaza o lista noua
+    if os.path.exists("lista_angajati.json"):
+        persoane = functie_citire()
+    else:
+        persoane = []
+    flag = True
+    while flag:
+        # CNP ----------------------
+        while True:
+            cnp = input("CNP: ")
+            if validare_cnp(cnp):
+                break
+            print("CNP invalid! Trebuie sa aiba exact 13 cifre și să fie doar numere.")
+        # Nume și prenume ----------------------
+        nume = input("Nume: ").capitalize()
+        prenume = input("Prenume: ").capitalize()
+        # Varsta ----------------------
+        while True:
+            try:
+                varsta = int(input("Varsta: "))
+                if varsta <= 18 :
+                    print('Varsta minima este 18 ani !')
+                    continue
+                if varsta > 117:
+                    print("Felicitari ai intrat in cartea recordurilor pentru vechimea pe acest pamant !!! ")
+                    continue
+                break
+            except ValueError:
+                print("Varsta trebuie sa fie un numar!")
+        # Salariu cu minim ----------------------
+        while True:
+            try:
+                salariu = float(input("Salariu: "))
+                if salariu <= 4050:
+                    print("Salariul trebuie sa fie mai mare ca minimul pe economie (4050)")
+                    continue
+                break
+            except ValueError:
+                print("Salariu trebuie sa fie un numar!")
+        # Departament și senioritate ----------------------
+        departament = input("Departament: ").capitalize()
+        senioritate = input("Senioritate (Junior, Mid, Senior): ").capitalize()
+        # Creează dictionarul persoana și îl adaugă în listă ----------------------
+        persoana = {
+            "CNP": cnp,
+            "Nume": nume,
+            "Prenume": prenume,
+            "Varsta": varsta,
+            "Salariu": salariu,
+            "Departament": departament,
+            "Senioritate": senioritate
+        }
+        persoane.append(persoana)
+        # Salvează în JSON ----------------------
+        functie_scriere(persoane)
+        # Continuare daca se doreste ----------------------
+        opt = input("Doresti sa mai adaugi persoane? Da / Nu: ").strip().lower()
+        if opt == "nu":
+            print("Datele au fost salvate, te vei intoarce la meniul principal!")
+            flag = False
+
 def fluturas(cauta: str) -> None:
     """
     Genereaza fluturas salarial pentru o persoana, calculand salariul net si scriind intr-un CSV.
