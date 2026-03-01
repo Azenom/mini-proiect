@@ -4,7 +4,7 @@
         "Nume": "Popescu",
         "Prenume": "Andrei",
         "Varsta": 29,
-        "Salar": 4500,
+        "Salariu": 4500,
         "Departament": "IT",
         "Senioritate": "mid"
     },
@@ -13,7 +13,7 @@
         "Nume": "Ionescu",
         "Prenume": "Maria",
         "Varsta": 30,
-        "Salar": 5200,
+        "Salariu": 5200,
         "Departament": "HR",
         "Senioritate": "senior"
     },
@@ -22,7 +22,7 @@
         "Nume": "Georgescu",
         "Prenume": "Mihai",
         "Varsta": 27,
-        "Salar": 4000,
+        "Salariu": 4000,
         "Departament": "Marketing",
         "Senioritate": "mid"
     },
@@ -31,7 +31,7 @@
         "Nume": "Dumitrescu",
         "Prenume": "Elena",
         "Varsta": 24,
-        "Salar": 4060,
+        "Salariu": 4060,
         "Departament": "Financiar",
         "Senioritate": "junior"
     },
@@ -40,7 +40,7 @@
         "Nume": "Popa",
         "Prenume": "Alexandru",
         "Varsta": 33,
-        "Salar": 6000,
+        "Salariu": 6000,
         "Departament": "IT",
         "Senioritate": "senior"
     },
@@ -49,7 +49,7 @@
         "Nume": "Stan",
         "Prenume": "Ioana",
         "Varsta": 28,
-        "Salar": 4700,
+        "Salariu": 4700,
         "Departament": "Vanzari",
         "Senioritate": "mid"
     },
@@ -58,7 +58,7 @@
         "Nume": "Marin",
         "Prenume": "Cristian",
         "Varsta": 31,
-        "Salar": 5500,
+        "Salariu": 5500,
         "Departament": "Logistica",
         "Senioritate": "senior"
     },
@@ -67,7 +67,7 @@
         "Nume": "Voicu",
         "Prenume": "Alina",
         "Varsta": 26,
-        "Salar": 4060,
+        "Salariu": 4060,
         "Departament": "IT",
         "Senioritate": "junior"
     },
@@ -76,7 +76,7 @@
         "Nume": "Morar",
         "Prenume": "Daniel",
         "Varsta": 35,
-        "Salar": 6200,
+        "Salariu": 6200,
         "Departament": "Management",
         "Senioritate": "senior"
     },
@@ -85,7 +85,7 @@
         "Nume": "Radu",
         "Prenume": "Bianca",
         "Varsta": 23,
-        "Salar": 4060,
+        "Salariu": 4060,
         "Departament": "Marketing",
         "Senioritate": "junior"
     },
@@ -94,7 +94,7 @@
         "Nume": "Barbu",
         "Prenume": "Paul",
         "Varsta": 32,
-        "Salar": 5800,
+        "Salariu": 5800,
         "Departament": "Financiar",
         "Senioritate": "senior"
     },
@@ -103,7 +103,7 @@
         "Nume": "Tudor",
         "Prenume": "Raluca",
         "Varsta": 27,
-        "Salar": 4200,
+        "Salariu": 4200,
         "Departament": "HR",
         "Senioritate": "mid"
     },
@@ -112,7 +112,7 @@
         "Nume": "Neagu",
         "Prenume": "Vlad",
         "Varsta": 30,
-        "Salar": 5100,
+        "Salariu": 5100,
         "Departament": "IT",
         "Senioritate": "mid"
     },
@@ -121,7 +121,7 @@
         "Nume": "Florea",
         "Prenume": "Diana",
         "Varsta": 25,
-        "Salar": 4060,
+        "Salariu": 4060,
         "Departament": "Vanzari",
         "Senioritate": "junior"
     },
@@ -130,7 +130,7 @@
         "Nume": "Preda",
         "Prenume": "Sorin",
         "Varsta": 34,
-        "Salar": 6100,
+        "Salariu": 6100,
         "Departament": "Logistica",
         "Senioritate": "senior"
     },
@@ -139,7 +139,7 @@
         "Nume": "Enache",
         "Prenume": "Laura",
         "Varsta": 26,
-        "Salar": 4060,
+        "Salariu": 4060,
         "Departament": "Financiar",
         "Senioritate": "junior"
     },
@@ -148,7 +148,7 @@
         "Nume": "Ilie",
         "Prenume": "Gabriel",
         "Varsta": 36,
-        "Salar": 6500,
+        "Salariu": 6500,
         "Departament": "Management",
         "Senioritate": "senior"
     },
@@ -157,7 +157,7 @@
         "Nume": "Mihalache",
         "Prenume": "Adina",
         "Varsta": 28,
-        "Salar": 4400,
+        "Salariu": 4400,
         "Departament": "Marketing",
         "Senioritate": "mid"
     },
@@ -166,7 +166,7 @@
         "Nume": "Sandu",
         "Prenume": "Robert",
         "Varsta": 31,
-        "Salar": 5700,
+        "Salariu": 5700,
         "Departament": "IT",
         "Senioritate": "senior"
     },
@@ -175,7 +175,7 @@
         "Nume": "Lazar",
         "Prenume": "Monica",
         "Varsta": 24,
-        "Salar": 4060,
+        "Salariu": 4060,
         "Departament": "HR",
         "Senioritate": "junior"
     }

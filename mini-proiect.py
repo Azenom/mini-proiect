@@ -1,11 +1,11 @@
-import os, json, csv 
-from functii_ajutor.citire_scriere import functie_citire, functie_scriere, export_csv_filtrat
+import json,csv, os
+from functii_ajutor.citire_scriere import functie_citire, functie_scriere, validare_cnp, export_csv_filtrat
 from functii_ajutor.meniu_optiuni import functie_meniu
 from datetime import datetime
-from typing import List, Dict, Union, Optional
+from typing import Optional, Dict, Union
+from gestionare import cauta_persoane, modificare_persoane, stergere_persoane, fluturas
 
-# persoane = [{"CNP":"1960101123456","Nume":"Popescu","Prenume":"Andrei","Varsta":29,"Salar":4500,"Departament":"IT","Senioritate":"mid"},{"CNP":"2950502234567","Nume":"Ionescu","Prenume":"Maria","Varsta":30,"Salar":5200,"Departament":"HR","Senioritate":"senior"},{"CNP":"1980703345678","Nume":"Georgescu","Prenume":"Mihai","Varsta":27,"Salar":4000,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"6020814456789","Nume":"Dumitrescu","Prenume":"Elena","Varsta":24,"Salar":4060,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1970905567890","Nume":"Popa","Prenume":"Alexandru","Varsta":33,"Salar":6000,"Departament":"IT","Senioritate":"senior"},{"CNP":"2961016678901","Nume":"Stan","Prenume":"Ioana","Varsta":28,"Salar":4700,"Departament":"Vanzari","Senioritate":"mid"},{"CNP":"1951127789012","Nume":"Marin","Prenume":"Cristian","Varsta":31,"Salar":5500,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2971208890123","Nume":"Voicu","Prenume":"Alina","Varsta":26,"Salar":4060,"Departament":"IT","Senioritate":"junior"},{"CNP":"1980112991234","Nume":"Morar","Prenume":"Daniel","Varsta":35,"Salar":6200,"Departament":"Management","Senioritate":"senior"},{"CNP":"2990213102345","Nume":"Radu","Prenume":"Bianca","Varsta":23,"Salar":4060,"Departament":"Marketing","Senioritate":"junior"},{"CNP":"1970314213456","Nume":"Barbu","Prenume":"Paul","Varsta":32,"Salar":5800,"Departament":"Financiar","Senioritate":"senior"},{"CNP":"2960415324567","Nume":"Tudor","Prenume":"Raluca","Varsta":27,"Salar":4200,"Departament":"HR","Senioritate":"mid"},{"CNP":"1980516435678","Nume":"Neagu","Prenume":"Vlad","Varsta":30,"Salar":5100,"Departament":"IT","Senioritate":"mid"},{"CNP":"2990617546789","Nume":"Florea","Prenume":"Diana","Varsta":25,"Salar":4060,"Departament":"Vanzari","Senioritate":"junior"},{"CNP":"1960718657890","Nume":"Preda","Prenume":"Sorin","Varsta":34,"Salar":6100,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2970819768901","Nume":"Enache","Prenume":"Laura","Varsta":26,"Salar":4060,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1950920879012","Nume":"Ilie","Prenume":"Gabriel","Varsta":36,"Salar":6500,"Departament":"Management","Senioritate":"senior"},{"CNP":"2981021980123","Nume":"Mihalache","Prenume":"Adina","Varsta":28,"Salar":4400,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"1971122091234","Nume":"Sandu","Prenume":"Robert","Varsta":31,"Salar":5700,"Departament":"IT","Senioritate":"senior"},{"CNP":"2991223102345","Nume":"Lazar","Prenume":"Monica","Varsta":24,"Salar":4060,"Departament":"HR","Senioritate":"junior"}]
-# functie_scriere(persoane)
+# persoane = [{"CNP":"1960101123456","Nume":"Popescu","Prenume":"Andrei","Varsta":29,"Salariu":4500,"Departament":"IT","Senioritate":"mid"},{"CNP":"2950502234567","Nume":"Ionescu","Prenume":"Maria","Varsta":30,"Salariu":5200,"Departament":"HR","Senioritate":"senior"},{"CNP":"1980703345678","Nume":"Georgescu","Prenume":"Mihai","Varsta":27,"Salariu":4000,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"6020814456789","Nume":"Dumitrescu","Prenume":"Elena","Varsta":24,"Salariu":4060,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1970905567890","Nume":"Popa","Prenume":"Alexandru","Varsta":33,"Salariu":6000,"Departament":"IT","Senioritate":"senior"},{"CNP":"2961016678901","Nume":"Stan","Prenume":"Ioana","Varsta":28,"Salariu":4700,"Departament":"Vanzari","Senioritate":"mid"},{"CNP":"1951127789012","Nume":"Marin","Prenume":"Cristian","Varsta":31,"Salariu":5500,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2971208890123","Nume":"Voicu","Prenume":"Alina","Varsta":26,"Salariu":4060,"Departament":"IT","Senioritate":"junior"},{"CNP":"1980112991234","Nume":"Morar","Prenume":"Daniel","Varsta":35,"Salariu":6200,"Departament":"Management","Senioritate":"senior"},{"CNP":"2990213102345","Nume":"Radu","Prenume":"Bianca","Varsta":23,"Salariu":4060,"Departament":"Marketing","Senioritate":"junior"},{"CNP":"1970314213456","Nume":"Barbu","Prenume":"Paul","Varsta":32,"Salariu":5800,"Departament":"Financiar","Senioritate":"senior"},{"CNP":"2960415324567","Nume":"Tudor","Prenume":"Raluca","Varsta":27,"Salariu":4200,"Departament":"HR","Senioritate":"mid"},{"CNP":"1980516435678","Nume":"Neagu","Prenume":"Vlad","Varsta":30,"Salariu":5100,"Departament":"IT","Senioritate":"mid"},{"CNP":"2990617546789","Nume":"Florea","Prenume":"Diana","Varsta":25,"Salariu":4060,"Departament":"Vanzari","Senioritate":"junior"},{"CNP":"1960718657890","Nume":"Preda","Prenume":"Sorin","Varsta":34,"Salariu":6100,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2970819768901","Nume":"Enache","Prenume":"Laura","Varsta":26,"Salariu":4060,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1950920879012","Nume":"Ilie","Prenume":"Gabriel","Varsta":36,"Salariu":6500,"Departament":"Management","Senioritate":"senior"},{"CNP":"2981021980123","Nume":"Mihalache","Prenume":"Adina","Varsta":28,"Salariu":4400,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"1971122091234","Nume":"Sandu","Prenume":"Robert","Varsta":31,"Salariu":5700,"Departament":"IT","Senioritate":"senior"},{"CNP":"2991223102345","Nume":"Lazar","Prenume":"Monica","Varsta":24,"Salariu":4060,"Departament":"HR","Senioritate":"junior"}]
 # persoane = []
 
 def adauga_persoane() -> None:
@@ -23,7 +23,7 @@ def adauga_persoane() -> None:
         # CNP ----------------------
         while True:
             cnp = input("CNP: ")
-            if cnp.isdigit() and len(cnp) == 13:
+            if validare_cnp(cnp):
                 break
             print("CNP invalid! Trebuie sa aiba exact 13 cifre și să fie doar numere.")
         # Nume și prenume ----------------------
@@ -81,9 +81,21 @@ def cauta_persoane(cauta: str) -> Optional[Dict[str, Union[str,int,float]]]:
     date = functie_citire()
     for elem in date:
         if elem['CNP'] == cauta:
-            return elem
+            return print(elem) 
     print(f'Nu s-a găsit persoana cu CNP: {cauta}')
     return None
+def cauta_persoane_wrapper() -> None:
+    """
+    Cere utilizatorului CNP-ul, validează și apelează functia cauta_persoane.
+    Continuă să ceară CNP până când se introduce unul valid.
+    """
+    while True:
+        cnp: str = input("Introdu CNP-ul cautat: ")
+        if validare_cnp(cnp):
+            cauta_persoane(cnp)
+            break
+        else:
+            print("CNP invalid! Trebuie să aibă 13 cifre.")
 
 def modificare_persoane(cauta: str) -> None:
     """
@@ -99,21 +111,21 @@ def modificare_persoane(cauta: str) -> None:
         if elem['CNP'] == cauta :
             while True : 
                 optiune = input('''        Ce anume vrei sa modifici ?
-            CNP, Nume, Prenume, Varsta, Salar, Departament, Senioritate sau Exit pentru salvare si iesire : ''')
+            CNP, Nume, Prenume, Varsta, Salariu, Departament, Senioritate sau Exit pentru salvare si iesire : ''')
                 if optiune.lower() == 'exit':
                     break
                 if optiune.upper() == "CNP":
                     while True :
                         var = input('Introdu noul CNP : ')
-                        if var.isdigit() and var not in lista_cnp :
+                        if validare_cnp(var) and (var not in lista_cnp or var == elem['CNP']):
                             elem['CNP'] = var
                             print('CNP modificat !')
                             break
                         else :
-                            print(f'CNP=ul : {elem['CNP']} exista ! ')
+                            print(f"CNP-ul : {elem['CNP']} exista ! ")
                 if optiune.capitalize() == 'Nume':
                     while True :
-                        var = input("Intordu noul nume : ")
+                        var = input("Introdu noul nume : ")
                         if var.isalpha():
                             elem['Nume'] = var.capitalize()
                             print('Nume modificat !')
@@ -122,7 +134,7 @@ def modificare_persoane(cauta: str) -> None:
                             print('Numele trebuie sa contina doar litere')
                 if optiune.capitalize() == 'Prenume':
                     while True :
-                        var = input("Intordu noul prenume : ")
+                        var = input("Introdu noul prenume : ")
                         if var.isalpha():
                             elem['Prenume'] = var.capitalize()
                             print('Prenume modificat !')
@@ -130,19 +142,25 @@ def modificare_persoane(cauta: str) -> None:
                         else :
                             print('Prenumele trebuie sa contina doar litere')
                 if optiune.capitalize() == 'Varsta':
-                    while True : 
-                        var = input("Intordu noua varsta : ")
-                        if var.isdigit() :
-                            elem['Varsta'] = int(var)
-                            print('Varsta modificata !') 
-                            break                       
-                        else :
-                            print('Varsta trebuie sa fie formata din cifre')                            
+                    while True:
+                        try:
+                            var = int(input("Introdu noua varsta: "))
+                            if var <= 18:
+                                print("Varsta minima este 18 ani!")
+                                continue
+                            if var > 117:
+                                print("Varsta introdusa este nerealista!")
+                                continue
+                            elem['Varsta'] = var
+                            print("Varsta modificata!")
+                            break
+                        except ValueError:
+                            print("Varsta trebuie sa fie un numar!")                          
                 if optiune.capitalize() == 'Salariu' :
                     while True:
                         try:
                             var = float(input("Introdu noul salariu: "))
-                            if var > 4050:
+                            if var >= 4050:
                                 elem['Salariu'] = var
                                 print("Salariu modificat!")
                                 break
@@ -152,7 +170,7 @@ def modificare_persoane(cauta: str) -> None:
                             print("Salariul trebuie sa fie un număr!")
                 if optiune.capitalize() == 'Departament':
                     while True :    
-                        var = input("Intordu noul departament : ")
+                        var = input("Introdu noul departament : ")
                         if var.isalpha():
                             elem['Departament'] = var.capitalize()
                             print('Departament modificat !')
@@ -161,13 +179,26 @@ def modificare_persoane(cauta: str) -> None:
                             print("Departamentul trebuie sa fie format din litere")
                 if optiune.capitalize() == 'Senioritate':
                     while True :
-                        var = input("Intordu noua senioritate : ")
+                        var = input("Introdu noua senioritate : ")
                         if var.isalpha():   
                             elem['Senioritate'] = var.capitalize()
                             print('Senioritate modficata !')
+                            break
                         else :
                             print('Senioritatea trebuie sa fie formata din litere')
     functie_scriere(date)
+def modificare_persoane_wrapper() -> None:
+    """
+    Cere CNP-ul persoanei de modificat, validează și apelează modificare_persoane.
+    Continuă până când se introduce un CNP valid.
+    """
+    while True:
+        cnp: str = input("Introdu CNP-ul persoanei de modificat: ")
+        if validare_cnp(cnp):
+            modificare_persoane(cnp)
+            break
+        else:
+            print("CNP invalid! Trebuie să aibă 13 cifre.")
 
 def stergere_persoane(cauta: str) -> None:
     """
@@ -186,16 +217,28 @@ def stergere_persoane(cauta: str) -> None:
     if not gasit:
         print(f'Nu s-a gasit persoana cu CNP: {cauta}')
     functie_scriere(date_noi)
+def stergere_persoane_wrapper() -> None:
+    """
+    Cere CNP-ul persoanei de șters, validează și apelează stergere_persoane.
+    Continuă până când se introduce un CNP valid.
+    """
+    while True:
+        cnp: str = input("Introdu CNP-ul persoanei de șters: ")
+        if validare_cnp(cnp):
+            stergere_persoane(cnp)
+            break
+        else:
+            print("CNP invalid! Trebuie să aibă 13 cifre.")
 
-def calcul_total() -> None:
+def calcul_total() -> float:
     """
     Calculeaza si afiseaza suma tuturor salariilor angajatilor din companie.
     """
     date = functie_citire()
     suma = 0
-    for elem in date :
+    for elem in date:
         suma += elem["Salariu"]
-    print(suma)
+    return suma
 
 def calcul_dep() -> None:
     """
@@ -240,6 +283,18 @@ def fluturas(cauta: str) -> None:
             writer.writerow(["Nume Prenume", "CNP", "Salariu Net", "Data Curenta"])
         writer.writerows(date)
     print(f'Verifica fisierul din {os.path.abspath(path)} pentru detalii!')
+def fluturas_wrapper() -> None:
+    """
+    Cere CNP-ul persoanei pentru fluturaș, validează și apelează fluturas.
+    Continuă până când se introduce un CNP valid.
+    """
+    while True:
+        cnp: str = input("Introdu CNP-ul pentru fluturas: ")
+        if validare_cnp(cnp):
+            fluturas(cnp)
+            break
+        else:
+            print("CNP invalid! Trebuie să aibă 13 cifre.")
 
 def seniori() -> None:
     """
@@ -267,30 +322,11 @@ while True :
     if optiune == "1" :
         adauga_persoane()
     if optiune == "2" :
-        while True :
-            cauta = input("Introdu cnp-ul cautat : ")
-            if len(cauta) == 13 :
-                cauta_persoane (cauta)
-                break
-            else : 
-                print(f'CNP-ul : {cauta} nu are toate cifrele')
+        cauta_persoane_wrapper()
     if optiune == "3" :
-        cauta = input("Introdu cnp-ul persoanei unde vrei sa faci modificari : ")
-        if len(cauta) == 13 :
-            modificare_persoane (cauta)
-            print(f'''
-                  Modificarile au fost salvate !
-                  ''')
-        else : 
-            print(f'CNP-ul : {cauta} nu are toate cifrele')
+        modificare_persoane_wrapper()
     if optiune == '4' :
-        while True :
-            cauta = input("Intordu cnp-ul persoanei pe care vrei sa o stergi : ")
-            if len(cauta) == 13 :
-                stergere_persoane(cauta)
-                break
-            else : 
-                print(f'CNP-ul : {cauta} nu are toate cifrele')
+        stergere_persoane_wrapper()
     if optiune == '5' :
         date = functie_citire()
         print(json.dumps(date, indent=4))
@@ -299,13 +335,7 @@ while True :
     if optiune == '7' :
         calcul_dep()
     if optiune == '8' :
-        while True :
-            cauta = input("Introdu cnp-ul cautat : ")
-            if len(cauta) == 13 :
-                fluturas (cauta)
-                break
-            else : 
-                print(f'CNP-ul : {cauta} nu are toate cifrele')
+        fluturas_wrapper()
     if optiune == '9' :
         seniori()
     if optiune == '10':
