@@ -2,12 +2,17 @@ import os, json, csv
 from functii_ajutor.citire_scriere import functie_citire, functie_scriere, functie_scriere_csv
 from functii_ajutor.meniu_optiuni import functie_meniu
 from datetime import datetime
+from typing import List, Dict, Union, Optional
 
-persoane = [{"CNP":"1960101123456","Nume":"Popescu","Prenume":"Andrei","Varsta":29,"Salar":4500,"Departament":"IT","Senioritate":"mid"},{"CNP":"2950502234567","Nume":"Ionescu","Prenume":"Maria","Varsta":30,"Salar":5200,"Departament":"HR","Senioritate":"senior"},{"CNP":"1980703345678","Nume":"Georgescu","Prenume":"Mihai","Varsta":27,"Salar":4000,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"6020814456789","Nume":"Dumitrescu","Prenume":"Elena","Varsta":24,"Salar":3500,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1970905567890","Nume":"Popa","Prenume":"Alexandru","Varsta":33,"Salar":6000,"Departament":"IT","Senioritate":"senior"},{"CNP":"2961016678901","Nume":"Stan","Prenume":"Ioana","Varsta":28,"Salar":4700,"Departament":"Vanzari","Senioritate":"mid"},{"CNP":"1951127789012","Nume":"Marin","Prenume":"Cristian","Varsta":31,"Salar":5500,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2971208890123","Nume":"Voicu","Prenume":"Alina","Varsta":26,"Salar":3800,"Departament":"IT","Senioritate":"junior"},{"CNP":"1980112991234","Nume":"Morar","Prenume":"Daniel","Varsta":35,"Salar":6200,"Departament":"Management","Senioritate":"senior"},{"CNP":"2990213102345","Nume":"Radu","Prenume":"Bianca","Varsta":23,"Salar":3400,"Departament":"Marketing","Senioritate":"junior"},{"CNP":"1970314213456","Nume":"Barbu","Prenume":"Paul","Varsta":32,"Salar":5800,"Departament":"Financiar","Senioritate":"senior"},{"CNP":"2960415324567","Nume":"Tudor","Prenume":"Raluca","Varsta":27,"Salar":4200,"Departament":"HR","Senioritate":"mid"},{"CNP":"1980516435678","Nume":"Neagu","Prenume":"Vlad","Varsta":30,"Salar":5100,"Departament":"IT","Senioritate":"mid"},{"CNP":"2990617546789","Nume":"Florea","Prenume":"Diana","Varsta":25,"Salar":3600,"Departament":"Vanzari","Senioritate":"junior"},{"CNP":"1960718657890","Nume":"Preda","Prenume":"Sorin","Varsta":34,"Salar":6100,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2970819768901","Nume":"Enache","Prenume":"Laura","Varsta":26,"Salar":3900,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1950920879012","Nume":"Ilie","Prenume":"Gabriel","Varsta":36,"Salar":6500,"Departament":"Management","Senioritate":"senior"},{"CNP":"2981021980123","Nume":"Mihalache","Prenume":"Adina","Varsta":28,"Salar":4400,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"1971122091234","Nume":"Sandu","Prenume":"Robert","Varsta":31,"Salar":5700,"Departament":"IT","Senioritate":"senior"},{"CNP":"2991223102345","Nume":"Lazar","Prenume":"Monica","Varsta":24,"Salar":3300,"Departament":"HR","Senioritate":"junior"}]
+# persoane = [{"CNP":"1960101123456","Nume":"Popescu","Prenume":"Andrei","Varsta":29,"Salar":4500,"Departament":"IT","Senioritate":"mid"},{"CNP":"2950502234567","Nume":"Ionescu","Prenume":"Maria","Varsta":30,"Salar":5200,"Departament":"HR","Senioritate":"senior"},{"CNP":"1980703345678","Nume":"Georgescu","Prenume":"Mihai","Varsta":27,"Salar":4000,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"6020814456789","Nume":"Dumitrescu","Prenume":"Elena","Varsta":24,"Salar":4060,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1970905567890","Nume":"Popa","Prenume":"Alexandru","Varsta":33,"Salar":6000,"Departament":"IT","Senioritate":"senior"},{"CNP":"2961016678901","Nume":"Stan","Prenume":"Ioana","Varsta":28,"Salar":4700,"Departament":"Vanzari","Senioritate":"mid"},{"CNP":"1951127789012","Nume":"Marin","Prenume":"Cristian","Varsta":31,"Salar":5500,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2971208890123","Nume":"Voicu","Prenume":"Alina","Varsta":26,"Salar":4060,"Departament":"IT","Senioritate":"junior"},{"CNP":"1980112991234","Nume":"Morar","Prenume":"Daniel","Varsta":35,"Salar":6200,"Departament":"Management","Senioritate":"senior"},{"CNP":"2990213102345","Nume":"Radu","Prenume":"Bianca","Varsta":23,"Salar":4060,"Departament":"Marketing","Senioritate":"junior"},{"CNP":"1970314213456","Nume":"Barbu","Prenume":"Paul","Varsta":32,"Salar":5800,"Departament":"Financiar","Senioritate":"senior"},{"CNP":"2960415324567","Nume":"Tudor","Prenume":"Raluca","Varsta":27,"Salar":4200,"Departament":"HR","Senioritate":"mid"},{"CNP":"1980516435678","Nume":"Neagu","Prenume":"Vlad","Varsta":30,"Salar":5100,"Departament":"IT","Senioritate":"mid"},{"CNP":"2990617546789","Nume":"Florea","Prenume":"Diana","Varsta":25,"Salar":4060,"Departament":"Vanzari","Senioritate":"junior"},{"CNP":"1960718657890","Nume":"Preda","Prenume":"Sorin","Varsta":34,"Salar":6100,"Departament":"Logistica","Senioritate":"senior"},{"CNP":"2970819768901","Nume":"Enache","Prenume":"Laura","Varsta":26,"Salar":4060,"Departament":"Financiar","Senioritate":"junior"},{"CNP":"1950920879012","Nume":"Ilie","Prenume":"Gabriel","Varsta":36,"Salar":6500,"Departament":"Management","Senioritate":"senior"},{"CNP":"2981021980123","Nume":"Mihalache","Prenume":"Adina","Varsta":28,"Salar":4400,"Departament":"Marketing","Senioritate":"mid"},{"CNP":"1971122091234","Nume":"Sandu","Prenume":"Robert","Varsta":31,"Salar":5700,"Departament":"IT","Senioritate":"senior"},{"CNP":"2991223102345","Nume":"Lazar","Prenume":"Monica","Varsta":24,"Salar":4060,"Departament":"HR","Senioritate":"junior"}]
+# functie_scriere(persoane)
 # persoane = []
 
-# codul merge - verifica daca fisierul exista ca sa nu suprascriem apoi adauga/scrie persoane in lista ca si dictionare
-def adauga_persoane ():
+def adauga_persoane() -> None:
+    """
+    Permite adăugarea manuală a unei persoane în lista de angajați.
+    Verifică validitatea datelor (CNP, varsta, salariu, senioritate) și salvează lista actualizată în JSON.
+    """
     # Verifica daca fisierul exista si daca da Încarcă lista existentă sau daca nu creează creaza o lista noua
     if os.path.exists("lista_angajati.json"):
         persoane = functie_citire()
@@ -28,6 +33,12 @@ def adauga_persoane ():
         while True:
             try:
                 varsta = int(input("Varsta: "))
+                if varsta <= 18 :
+                    print('Varsta minima este 18 ani !')
+                    continue
+                if varsta > 117:
+                    print("Felicitari ai intrat in cartea recordurilor pentru vechimea pe acest pamant !!! ")
+                    continue
                 break
             except ValueError:
                 print("Varsta trebuie sa fie un numar!")
@@ -35,7 +46,7 @@ def adauga_persoane ():
         while True:
             try:
                 salariu = float(input("Salariu: "))
-                if salariu < 4050:
+                if salariu <= 4050:
                     print("Salariul trebuie sa fie mai mare ca minimul pe economie (4050)")
                     continue
                 break
@@ -62,27 +73,28 @@ def adauga_persoane ():
         if opt == "nu":
             print("Datele au fost salvate, te vei intoarce la meniul principal!")
             flag = False
-
-# codul merge - stie sa caute si sa afiseze persoana cautata            
-# def cauta_persoane (cauta):
-cauta = input('introdu cnp : ')
-date = functie_citire()
-counter = 0
-for elem in date :
-    if elem['CNP'] == cauta :
-        print(elem)
-        break
-    else : counter +=1
-
-if counter > 0 :
-    print(f'Nu s-a gasit persoana cu CNP : {cauta}')
         
-
-
-# codul merge - stie sa modifice fiecare informatie al angajatului daca se doreste
-def modificare_persoane (cauta):
-    lista_cnp = []
+def cauta_persoane(cauta: str) -> Optional[Dict[str, Union[str,int,float]]]:
+    """
+    Cauta o persoana dupa CNP si returneaza dictionarul cu datele acesteia.
+    """
     date = functie_citire()
+    for elem in date:
+        if elem['CNP'] == cauta:
+            return elem
+    print(f'Nu s-a găsit persoana cu CNP: {cauta}')
+    return None
+
+def modificare_persoane(cauta: str) -> None:
+    """
+    Permite modificarea datelor unei persoane identificate prin CNP.
+    Salveaza automat modificarile in fisierul JSON.
+    """
+    date = functie_citire()
+    # Incarc toate CNP-urile intr-o lista pentru verificare unicitate CNP
+    lista_cnp = []
+    for cnp in date :
+        lista_cnp.append(cnp['CNP'])
     for elem in date : 
         if elem['CNP'] == cauta :
             while True : 
@@ -92,8 +104,6 @@ def modificare_persoane (cauta):
                     break
                 if optiune.upper() == "CNP":
                     while True :
-                        for cnp in date :
-                            lista_cnp.append(cnp['CNP'])
                         var = input('Introdu noul CNP : ')
                         if var.isdigit() and var not in lista_cnp :
                             elem['CNP'] = var
@@ -128,15 +138,18 @@ def modificare_persoane (cauta):
                             break                       
                         else :
                             print('Varsta trebuie sa fie formata din cifre')                            
-                if optiune.capitalize() == 'Salar' :
-                    while True :
-                        var = float(input("Intordu noul salariu : "))
-                        if var.isdigit() :
-                            elem['Salar'] = var
-                            print("Salariul modificat !")
-                            break
-                        else :
-                            print("Salariul trebuie sa fie format din cifre")
+                if optiune.capitalize() == 'Salariu' :
+                    while True:
+                        try:
+                            var = float(input("Introdu noul salariu: "))
+                            if var > 4050:
+                                elem['Salariu'] = var
+                                print("Salariu modificat!")
+                                break
+                            else:
+                                print("Salariul trebuie să fie mai mare decât 4050")
+                        except ValueError:
+                            print("Salariul trebuie sa fie un număr!")
                 if optiune.capitalize() == 'Departament':
                     while True :    
                         var = input("Intordu noul departament : ")
@@ -156,46 +169,61 @@ def modificare_persoane (cauta):
                             print('Senioritatea trebuie sa fie formata din litere')
     functie_scriere(date)
 
-# codul merge - stie sa stearga persoana cu toate detaliile ei din dictionar si sa o si afiseze 
-def stergere_persoane(cauta):
+def stergere_persoane(cauta: str) -> None:
+    """
+    Sterge o persoana din lista dupa CNP si afiseaza un mesaj de confirmare.
+    """
     date = functie_citire()
-    for elem in date : 
-        if elem['CNP'] == cauta :
-            print(f'Persoana : {elem["Nume"]} {elem["Prenume"]} a fost stearsa !')
-            elem.clear()
-    functie_scriere(date)
+    gasit = False
+    # Creez o lista goala in care pun persoanele ce nu au cnp-ul cautat si astfel scriu un fisier tot, mai putin cel gasit
+    date_noi = []
+    for elem in date:
+        if elem['CNP'] == cauta:
+            print(f'Persoana {elem["Nume"]} {elem["Prenume"]} a fost stearsa!')
+            gasit = True
+        else:
+            date_noi.append(elem)
+    if not gasit:
+        print(f'Nu s-a gasit persoana cu CNP: {cauta}')
+    functie_scriere(date_noi)
 
-# codul merge - stie sa calculeze totaul de salarii din companie
-def calcul_total():
+def calcul_total() -> None:
+    """
+    Calculeaza si afiseaza suma tuturor salariilor angajatilor din companie.
+    """
     date = functie_citire()
     suma = 0
     for elem in date :
-        suma += elem["Salar"]
+        suma += elem["Salariu"]
     print(suma)
 
-# codul merge - stie sa calculeze si sa afiseze salariile totale pe departament
-def calcul_dep():
+def calcul_dep() -> None:
+    """
+    Calculeaza si afiseaza salariile totale pe fiecare departament.
+    """
     date = functie_citire()
     sal_dep={}
     for elem in date :
         dep = elem["Departament"]
-        sal = elem["Salar"]
+        sal = elem["Salariu"]
         if dep not in sal_dep:
             sal_dep[dep] = 0
         sal_dep[dep] += sal
     for dep, total in sal_dep.items():
         print(f'Departamentul : {dep} are {total} ron in salarii')
 
-# codul merge - stie sa calculeze salariul net si sa faca o lista cu nume+prenume, cnp, salariul net, data curenta
-# Formula : Salariu Net = Salariu Brut - CAS (25%) - CASS (10%) - Impozit ( 10% din (Salariu Brut - CAS (25%) - CASS (10%) ) )
-def fluturas (cauta):
+def fluturas(cauta: str) -> None:
+    """
+    Genereaza fluturas salarial pentru o persoana, calculand salariul net si scriind intr-un CSV.
+    Formula : Salariu Net = Salariu Brut - CAS (25%) - CASS (10%) - Impozit ( 10% din (Salariu Brut - CAS (25%) - CASS (10%) ) )
+    """
     persoane = functie_citire()
     date = []
     for elem in persoane : 
         if elem['CNP']== cauta :
             # unesc nume si prenume intr-o singura variabila
             nume_prenume = elem['Nume'] + " " + elem["Prenume"]
-            salariu = elem['Salar']
+            salariu = elem['Salariu']
             # calculez salariul net si apoi il converstc in str ca sa apara si cuvantul : ron la final
             salar = salariu - 0.25 * salariu - 0.1 * salariu - 0.1 * (salariu - 0.25 * salariu - 0.1 * salariu)
             salariu_net = str(salar) + " ron"
@@ -213,8 +241,10 @@ def fluturas (cauta):
         writer.writerows(date)
     print(f'Verifica fisierul din {os.path.abspath(path)} pentru detalii!')
 
-# codul merge - stie sa citeasca detele la zi si sa suprascrie in csv la fiecare interogare de senioritate
-def seniori ():
+def seniori() -> None:
+    """
+    Creeaza CSV cu angajatii filtrati dupa senioritate.
+    """
     date = functie_citire()
     # extragem senioritățile unice și le transformăm în lowercase
     lista_seni = {elem['Senioritate'].lower() for elem in date}
@@ -232,8 +262,10 @@ def seniori ():
     path = 'fisiere_output/senioritate.csv'
     functie_scriere_csv(lista,path,cauta)
 
-# codul merge - stie sa citeasca detele la zi si sa suprascrie in csv la fiecare interogare de departament
-def depart () :
+def depart() -> None:
+    """
+    Creeaza CSV cu angajatii filtrati dupa departament.
+    """
     date = functie_citire()
     departamente = list({elem["Departament"] for elem in date})
     print(departamente)
@@ -256,7 +288,7 @@ def depart () :
 #     if optiune == '0' :
 #         print("Ai iesit din sistem ! ")
 #         break
-#     if optiune == "1" :           
+#     if optiune == "1" :
 #         adauga_persoane()
 #     if optiune == "2" :
 #         while True :
@@ -269,25 +301,26 @@ def depart () :
 #     if optiune == "3" :
 #         cauta = input("Introdu cnp-ul persoanei unde vrei sa faci modificari : ")
 #         if len(cauta) == 13 :
-#             temp = cauta_persoane(cauta)
-#             print(temp)
 #             modificare_persoane (cauta)
 #             print(f'''
 #                   Modificarile au fost salvate !
-#                   Acestea sunt noile date ale persoanei :
-#                   {temp}
 #                   ''')
 #         else : 
 #             print(f'CNP-ul : {cauta} nu are toate cifrele')
 #     if optiune == '4' :
-#         cauta = input("Intordu cnp-ul persoanei pe care vrei sa o stergi : ")
-#         stergere_persoane(cauta)
+#         while True :
+#             cauta = input("Intordu cnp-ul persoanei pe care vrei sa o stergi : ")
+#             if len(cauta) == 13 :
+#                 stergere_persoane(cauta)
+#                 break
+#             else : 
+#                 print(f'CNP-ul : {cauta} nu are toate cifrele')
 #     if optiune == '5' :
 #         date = functie_citire()
 #         print(json.dumps(date, indent=4))
 #     if optiune == '6' :
 #         print('Calcul cost total salarii companie : ',calcul_total())
-#     if optiune == '7' :        
+#     if optiune == '7' :
 #         calcul_dep()
 #     if optiune == '8' :
 #         while True :
@@ -300,7 +333,4 @@ def depart () :
 #     if optiune == '9' :
 #         seniori()
 #     if optiune == '10':
-#         depart()
-                
-
-
+#         depart()    

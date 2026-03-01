@@ -31,7 +31,7 @@
         "Nume": "Dumitrescu",
         "Prenume": "Elena",
         "Varsta": 24,
-        "Salar": 3500,
+        "Salar": 4060,
         "Departament": "Financiar",
         "Senioritate": "junior"
     },
@@ -67,7 +67,7 @@
         "Nume": "Voicu",
         "Prenume": "Alina",
         "Varsta": 26,
-        "Salar": 3800,
+        "Salar": 4060,
         "Departament": "IT",
         "Senioritate": "junior"
     },
@@ -85,7 +85,7 @@
         "Nume": "Radu",
         "Prenume": "Bianca",
         "Varsta": 23,
-        "Salar": 3400,
+        "Salar": 4060,
         "Departament": "Marketing",
         "Senioritate": "junior"
     },
@@ -121,7 +121,7 @@
         "Nume": "Florea",
         "Prenume": "Diana",
         "Varsta": 25,
-        "Salar": 3600,
+        "Salar": 4060,
         "Departament": "Vanzari",
         "Senioritate": "junior"
     },
@@ -139,7 +139,7 @@
         "Nume": "Enache",
         "Prenume": "Laura",
         "Varsta": 26,
-        "Salar": 3900,
+        "Salar": 4060,
         "Departament": "Financiar",
         "Senioritate": "junior"
     },
@@ -171,11 +171,11 @@
         "Senioritate": "senior"
     },
     {
-        "CNP": "1940731300300",
+        "CNP": "2991223102345",
         "Nume": "Lazar",
         "Prenume": "Monica",
         "Varsta": 24,
-        "Salar": 3300,
+        "Salar": 4060,
         "Departament": "HR",
         "Senioritate": "junior"
     }
