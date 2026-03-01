@@ -1,5 +1,5 @@
 import os, json, csv 
-from functii_ajutor.citire_scriere import functie_citire, functie_scriere, functie_scriere_csv
+from functii_ajutor.citire_scriere import functie_citire, functie_scriere, export_csv_filtrat
 from functii_ajutor.meniu_optiuni import functie_meniu
 from datetime import datetime
 from typing import List, Dict, Union, Optional
@@ -246,91 +246,67 @@ def seniori() -> None:
     Creeaza CSV cu angajatii filtrati dupa senioritate.
     """
     date = functie_citire()
-    # extragem senioritățile unice și le transformăm în lowercase
-    lista_seni = {elem['Senioritate'].lower() for elem in date}
-    lista=[]
-    while True:
-        cauta = input('Introdu senioritatea: ').lower()
-        if cauta in lista_seni:
-            for elem in date:
-                if elem['Senioritate'].lower() == cauta:
-                    nume_prenume = elem['Nume']+ ' ' + elem['Prenume']
-                    lista.append(nume_prenume)
-            break
-        else:
-            print(f'Nu exista {cauta}. Reintrodu : ')
-    path = 'fisiere_output/senioritate.csv'
-    functie_scriere_csv(lista,path,cauta)
+    cauta = input("Introdu senioritatea: ")
+    export_csv_filtrat(date, 'Senioritate', cauta, 'fisiere_output/senioritate.csv')
 
 def depart() -> None:
     """
     Creeaza CSV cu angajatii filtrati dupa departament.
     """
     date = functie_citire()
-    departamente = list({elem["Departament"] for elem in date})
-    print(departamente)
-    lista = []
-    cauta = input("Introdu departamentul cautat : ")
-    for dep in departamente :
-        if cauta.capitalize() == dep or ( len(cauta)<3 and dep == cauta.upper() ) or dep == cauta:
-            for elem in date :
-                if elem["Departament"] == dep:
-                    nume_prenume = elem['Nume']+ ' ' + elem['Prenume']
-                    lista.append(nume_prenume)
-
-    path = 'fisiere_output/departament.csv'
-    functie_scriere_csv(lista,path,cauta)
+    cauta = input("Introdu departamentul: ")
+    export_csv_filtrat(date, 'Departament', cauta, 'fisiere_output/departament.csv')
 
 # Meniul principal ------------------------------------------------------
-# functie_meniu()
-# while True :
-#     optiune = input("Alege optiune : ")
-#     if optiune == '0' :
-#         print("Ai iesit din sistem ! ")
-#         break
-#     if optiune == "1" :
-#         adauga_persoane()
-#     if optiune == "2" :
-#         while True :
-#             cauta = input("Introdu cnp-ul cautat : ")
-#             if len(cauta) == 13 :
-#                 cauta_persoane (cauta)
-#                 break
-#             else : 
-#                 print(f'CNP-ul : {cauta} nu are toate cifrele')
-#     if optiune == "3" :
-#         cauta = input("Introdu cnp-ul persoanei unde vrei sa faci modificari : ")
-#         if len(cauta) == 13 :
-#             modificare_persoane (cauta)
-#             print(f'''
-#                   Modificarile au fost salvate !
-#                   ''')
-#         else : 
-#             print(f'CNP-ul : {cauta} nu are toate cifrele')
-#     if optiune == '4' :
-#         while True :
-#             cauta = input("Intordu cnp-ul persoanei pe care vrei sa o stergi : ")
-#             if len(cauta) == 13 :
-#                 stergere_persoane(cauta)
-#                 break
-#             else : 
-#                 print(f'CNP-ul : {cauta} nu are toate cifrele')
-#     if optiune == '5' :
-#         date = functie_citire()
-#         print(json.dumps(date, indent=4))
-#     if optiune == '6' :
-#         print('Calcul cost total salarii companie : ',calcul_total())
-#     if optiune == '7' :
-#         calcul_dep()
-#     if optiune == '8' :
-#         while True :
-#             cauta = input("Introdu cnp-ul cautat : ")
-#             if len(cauta) == 13 :
-#                 fluturas (cauta)
-#                 break
-#             else : 
-#                 print(f'CNP-ul : {cauta} nu are toate cifrele')
-#     if optiune == '9' :
-#         seniori()
-#     if optiune == '10':
-#         depart()    
+functie_meniu()
+while True :
+    optiune = input("Alege optiune : ")
+    if optiune == '0' :
+        print("Ai iesit din sistem ! ")
+        break
+    if optiune == "1" :
+        adauga_persoane()
+    if optiune == "2" :
+        while True :
+            cauta = input("Introdu cnp-ul cautat : ")
+            if len(cauta) == 13 :
+                cauta_persoane (cauta)
+                break
+            else : 
+                print(f'CNP-ul : {cauta} nu are toate cifrele')
+    if optiune == "3" :
+        cauta = input("Introdu cnp-ul persoanei unde vrei sa faci modificari : ")
+        if len(cauta) == 13 :
+            modificare_persoane (cauta)
+            print(f'''
+                  Modificarile au fost salvate !
+                  ''')
+        else : 
+            print(f'CNP-ul : {cauta} nu are toate cifrele')
+    if optiune == '4' :
+        while True :
+            cauta = input("Intordu cnp-ul persoanei pe care vrei sa o stergi : ")
+            if len(cauta) == 13 :
+                stergere_persoane(cauta)
+                break
+            else : 
+                print(f'CNP-ul : {cauta} nu are toate cifrele')
+    if optiune == '5' :
+        date = functie_citire()
+        print(json.dumps(date, indent=4))
+    if optiune == '6' :
+        print('Calcul cost total salarii companie : ',calcul_total())
+    if optiune == '7' :
+        calcul_dep()
+    if optiune == '8' :
+        while True :
+            cauta = input("Introdu cnp-ul cautat : ")
+            if len(cauta) == 13 :
+                fluturas (cauta)
+                break
+            else : 
+                print(f'CNP-ul : {cauta} nu are toate cifrele')
+    if optiune == '9' :
+        seniori()
+    if optiune == '10':
+        depart()
