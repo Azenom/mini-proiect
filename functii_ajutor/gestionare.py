@@ -13,17 +13,28 @@ def adauga_persoane() -> None:
         persoane = functie_citire()
     else:
         persoane = []
+    
+    # Incarc toate CNP-urile intr-o lista pentru verificare unicitate CNP
+    lista_cnp = []
+    for cnp in persoane :
+        lista_cnp.append(cnp['CNP'])
+    
     flag = True
     while flag:
         # CNP ----------------------
         while True:
-            cnp = input("CNP: ")
-            if validare_cnp(cnp):
+            var = input("CNP: ")
+            if validare_cnp(var) and var not in lista_cnp :
+                cnp = var
+                lista_cnp.append(var)
                 break
-            print("CNP invalid! Trebuie sa aiba exact 13 cifre și să fie doar numere.")
+            elif var in lista_cnp :
+                print('CNP-ul exista deja !')
+
         # Nume și prenume ----------------------
         nume = input("Nume: ").capitalize()
         prenume = input("Prenume: ").capitalize()
+
         # Varsta ----------------------
         while True:
             try:
@@ -37,6 +48,7 @@ def adauga_persoane() -> None:
                 break
             except ValueError:
                 print("Varsta trebuie sa fie un numar!")
+
         # Salariu cu minim ----------------------
         while True:
             try:
@@ -47,9 +59,17 @@ def adauga_persoane() -> None:
                 break
             except ValueError:
                 print("Salariu trebuie sa fie un numar!")
+
         # Departament și senioritate ----------------------
         departament = input("Departament: ").capitalize()
-        senioritate = input("Senioritate (Junior, Mid, Senior): ").capitalize()
+        while True:
+            var = input("Senioritate (Junior, Mid, Senior): ").capitalize()
+            if var == 'Junior' or var =='Mid' or var=='Senior':
+                senioritate = var
+                break
+            else : 
+                print(f'Nu s-a gasit senioritatea {var} introdusa !')
+
         # Creează dictionarul persoana și îl adaugă în listă ----------------------
         persoana = {
             "CNP": cnp,
@@ -61,8 +81,14 @@ def adauga_persoane() -> None:
             "Senioritate": senioritate
         }
         persoane.append(persoana)
-        # Salvează în JSON ----------------------
+
+        # Fac update la lista de CNP-uri inca o data ----------------------
+        # for cnp in persoane :
+        #     lista_cnp.append(cnp['CNP'])
+
+        # Salvează lista de dictionare în JSON ----------------------
         functie_scriere(persoane)
+
         # Continuare daca se doreste ----------------------
         opt = input("Doresti sa mai adaugi persoane? Da / Nu: ").strip().lower()
         if opt == "nu":
@@ -76,9 +102,10 @@ def cauta_persoane(cauta: str) -> Optional[Dict[str, Union[str,int,float]]]:
     date = functie_citire()
     for elem in date:
         if elem['CNP'] == cauta:
-            return print(elem) 
+            print(elem)
+            return elem
+
     print(f'Nu s-a găsit persoana cu CNP: {cauta}')
-    return None
 
 def modificare_persoane(cauta: str) -> None:
     """
@@ -86,45 +113,65 @@ def modificare_persoane(cauta: str) -> None:
     Salveaza automat modificarile in fisierul JSON.
     """
     date = functie_citire()
+
     # Incarc toate CNP-urile intr-o lista pentru verificare unicitate CNP
     lista_cnp = []
     for cnp in date :
         lista_cnp.append(cnp['CNP'])
-    for elem in date : 
-        if elem['CNP'] == cauta :
-            while True : 
-                optiune = input('''        Ce anume vrei sa modifici ?
-            CNP, Nume, Prenume, Varsta, Salariu, Departament, Senioritate sau Exit pentru salvare si iesire : ''')
+    
+    # Partea de căutare și modificare a unui angajat după CNP
+    # cauta = input("Introdu CNP-ul angajatului pe care vrei sa-l modifici: ")
+
+    for elem in date:
+        if elem['CNP'] == cauta:
+            while True:
+                optiune = input('''
+                Ce anume vrei sa modifici?
+                                
+CNP, Nume, Prenume, Varsta, Salariu, Departament, Senioritate 
+            --- Exit pentru salvare si iesire: 
+                                ''')
+                # ---------------------- Exit ----------------------
                 if optiune.lower() == 'exit':
                     break
-                if optiune.upper() == "CNP":
-                    while True :
-                        var = input('Introdu noul CNP : ')
-                        if validare_cnp(var) and (var not in lista_cnp or var == elem['CNP']):
+
+                # ---------------------- CNP ----------------------
+                elif optiune.upper() == "CNP":
+                    while True:
+                        var = input("Introdu noul CNP: ")
+                        if validare_cnp(var) and var not in lista_cnp and elem['CNP'] != var:
                             elem['CNP'] = var
-                            print('CNP modificat !')
+                            print("CNP modificat!")
                             break
-                        else :
-                            print(f"CNP-ul : {elem['CNP']} exista ! ")
-                if optiune.capitalize() == 'Nume':
-                    while True :
-                        var = input("Introdu noul nume : ")
+                        elif elem['CNP'] == var :
+                            print('Ai introdus acelasi CNP !')
+                        elif var in lista_cnp :
+                            print("CNP-ul este duplicat !")
+
+                # ---------------------- Nume ----------------------
+                elif optiune.capitalize() == 'Nume':
+                    while True:
+                        var = input("Introdu noul nume: ")
                         if var.isalpha():
                             elem['Nume'] = var.capitalize()
-                            print('Nume modificat !')
+                            print("Nume modificat!")
                             break
-                        else :
-                            print('Numele trebuie sa contina doar litere')
-                if optiune.capitalize() == 'Prenume':
-                    while True :
-                        var = input("Introdu noul prenume : ")
+                        else:
+                            print("Numele trebuie sa contina doar litere.")
+
+                # ---------------------- Prenume ----------------------
+                elif optiune.capitalize() == 'Prenume':
+                    while True:
+                        var = input("Introdu noul prenume: ")
                         if var.isalpha():
                             elem['Prenume'] = var.capitalize()
-                            print('Prenume modificat !')
+                            print("Prenume modificat!")
                             break
-                        else :
-                            print('Prenumele trebuie sa contina doar litere')
-                if optiune.capitalize() == 'Varsta':
+                        else:
+                            print("Prenumele trebuie sa contina doar litere.")
+
+                # ---------------------- Varsta ----------------------
+                elif optiune.capitalize() == 'Varsta':
                     while True:
                         try:
                             var = int(input("Introdu noua varsta: "))
@@ -138,8 +185,10 @@ def modificare_persoane(cauta: str) -> None:
                             print("Varsta modificata!")
                             break
                         except ValueError:
-                            print("Varsta trebuie sa fie un numar!")                          
-                if optiune.capitalize() == 'Salariu' :
+                            print("Varsta trebuie sa fie un numar!")
+
+                # ---------------------- Salariu ----------------------
+                elif optiune.capitalize() == 'Salariu':
                     while True:
                         try:
                             var = float(input("Introdu noul salariu: "))
@@ -148,27 +197,34 @@ def modificare_persoane(cauta: str) -> None:
                                 print("Salariu modificat!")
                                 break
                             else:
-                                print("Salariul trebuie să fie mai mare decât 4050")
+                                print("Salariul trebuie sa fie mai mare decât 4050.")
                         except ValueError:
-                            print("Salariul trebuie sa fie un număr!")
-                if optiune.capitalize() == 'Departament':
-                    while True :    
-                        var = input("Introdu noul departament : ")
+                            print("Salariul trebuie sa fie un numar!")
+
+                # ---------------------- Departament ----------------------
+                elif optiune.capitalize() == 'Departament':
+                    while True:
+                        var = input("Introdu noul departament: ")
                         if var.isalpha():
                             elem['Departament'] = var.capitalize()
-                            print('Departament modificat !')
+                            print("Departament modificat!")
                             break
-                        else :
-                            print("Departamentul trebuie sa fie format din litere")
-                if optiune.capitalize() == 'Senioritate':
-                    while True :
-                        var = input("Introdu noua senioritate : ")
-                        if var.isalpha():   
+                        else:
+                            print("Departamentul trebuie sa contina doar litere.")
+
+                # ---------------------- Senioritate ----------------------
+                elif optiune.capitalize() == 'Senioritate':
+                    while True:
+                        var = input("Introdu noua senioritate: ")
+                        if var.isalpha():
                             elem['Senioritate'] = var.capitalize()
-                            print('Senioritate modficata !')
+                            print("Senioritate modificata!")
                             break
-                        else :
-                            print('Senioritatea trebuie sa fie formata din litere')
+                        else:
+                            print("Senioritatea trebuie sa contina doar litere.")
+            break  # iesim din for dupa ce am gasit angajatul
+    
+    # Salvează lista de dictionare în JSON ----------------------
     functie_scriere(date)
 
 def stergere_persoane(cauta: str) -> None:
@@ -196,6 +252,7 @@ def fluturas(cauta: str) -> None:
     """
     persoane = functie_citire()
     date = []
+    flag = False
     for elem in persoane : 
         if elem['CNP']== cauta :
             # unesc nume si prenume intr-o singura variabila
@@ -207,13 +264,20 @@ def fluturas(cauta: str) -> None:
             # adaug si data la final de lista ce contine nume si prenume, cnp, salariul net, data curenta
             data_curenta = datetime.now().strftime('%H:%M %d-%m-%Y')
             date.append([nume_prenume, elem['CNP'], salariu_net, data_curenta])
-    # specific in ce folder sa scrie fisierul
-    path = 'fisiere_output/fluturas.csv'
-    exista_fisier = os.path.exists(path) # boolean
-    with open(path, 'a', newline='', encoding='utf-8') as my_file:
-        writer = csv.writer(my_file)
-        if not exista_fisier or os.path.getsize(path) == 0:     
-            # scriu header-ul doar dacă fișierul nu există sau este gol
-            writer.writerow(["Nume Prenume", "CNP", "Salariu Net", "Data Curenta"])
-        writer.writerows(date)
-    print(f'Verifica fisierul din {os.path.abspath(path)} pentru detalii!')
+            flag = True
+            break
+        
+    if flag :
+        # sa scrie fisierul si specific in ce folder 
+        path = 'fisiere_output/fluturas.csv'
+        exista_fisier = os.path.exists(path) # boolean
+        with open(path, 'a', newline='', encoding='utf-8') as my_file:
+            writer = csv.writer(my_file)
+            if not exista_fisier or os.path.getsize(path) == 0:     
+                # scriu header-ul doar dacă fișierul nu există sau este gol
+                writer.writerow(["Nume Prenume", "CNP", "Salariu Net", "Data Curenta"])
+            writer.writerows(date)
+        print(f'Verifica fisierul din {os.path.abspath(path)} pentru detalii!')
+    else :
+        print(f"Nu s-a gasit CNP-ul : {cauta}")
+    

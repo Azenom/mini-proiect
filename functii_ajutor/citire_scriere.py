@@ -2,8 +2,8 @@ import json, os, csv
 
 def functie_citire ():
     with open("lista_angajati.json", "r") as my_file:
-        data = json.load(my_file)
-    return data
+        date = json.load(my_file)
+    return date
 
 def functie_scriere(param):
     with open("lista_angajati.json", "w") as my_file:
@@ -15,7 +15,11 @@ def validare_cnp(cnp: str) -> bool:
     - contine doar cifre
     - are exact 13 caractere
     """
-    return cnp.isdigit() and len(cnp) == 13
+    if cnp.isdigit() and len(cnp) == 13 :
+        return True
+    else : 
+        print("CNP invalid! Trebuie să aibă 13 cifre !!!")
+        return False
 
 def export_csv_filtrat(lista_angajati, camp_filtru, cauta, fisier_csv):
     """
@@ -24,16 +28,16 @@ def export_csv_filtrat(lista_angajati, camp_filtru, cauta, fisier_csv):
     os.makedirs(os.path.dirname(fisier_csv), exist_ok=True)
     # Filtrarea angajatilor
     lista_filtrata = [
-        [angajat['Nume'] + ' ' + angajat['Prenume']] 
-        for angajat in lista_angajati 
-        if str(angajat[camp_filtru]).strip().lower() == cauta.lower()
+        [elem['Nume'] + ' ' + elem['Prenume']] 
+        for elem in lista_angajati 
+        if str(elem[camp_filtru]).strip().lower() == cauta.lower()
                     ]
     # Scriere CSV
-    with open(fisier_csv, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.writer(f)
+    with open(fisier_csv, 'w', newline='', encoding='utf-8') as my_file:
+        writer = csv.writer(my_file)
         writer.writerow(["Nume Prenume", cauta])
         writer.writerows(lista_filtrata)
     if lista_filtrata:
         print(f"CSV-ul a fost generat: {os.path.abspath(fisier_csv)}")
     else:
-        print(f"Nu s-au gasit angajati cu {camp_filtru} = '{cauta}'")
+        print(f"Nu s-au gasit angajati in {camp_filtru} : '{cauta}'")
