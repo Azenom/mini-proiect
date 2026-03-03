@@ -178,5 +178,14 @@
         "Salariu": 4060,
         "Departament": "HR",
         "Senioritate": "Senior"
+    },
+    {
+        "CNP": "1231231231234",
+        "Nume": "Asd",
+        "Prenume": "Asd",
+        "Varsta": 23,
+        "Salariu": 6666.0,
+        "Departament": "Asd",
+        "Senioritate": "Asd"
     }
 ]

@@ -28,7 +28,7 @@ def adauga_persoane() -> None:
         while True:
             try:
                 varsta = int(input("Varsta: "))
-                if varsta <= 18 :
+                if varsta <= 17 :
                     print('Varsta minima este 18 ani !')
                     continue
                 if varsta > 117:
