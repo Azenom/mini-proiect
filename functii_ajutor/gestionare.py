@@ -134,9 +134,6 @@ def modificare_persoane(cauta: str) -> None:
     lista_cnp = []
     for cnp in date :
         lista_cnp.append(cnp['CNP'])
-    
-    # Partea de căutare și modificare a unui angajat după CNP
-    # cauta = input("Introdu CNP-ul angajatului pe care vrei sa-l modifici: ")
 
     for elem in date:
         if elem['CNP'] == cauta:
@@ -327,4 +324,3 @@ def fluturas(cauta: str) -> None:
         print(f'Verifica fisierul din {os.path.abspath(path)} pentru detalii!')
     else:
         print(f"Nu s-a gasit CNP-ul : {cauta}")
-    
