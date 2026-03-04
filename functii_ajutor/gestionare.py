@@ -1,7 +1,7 @@
 import os,csv
 from functii_ajutor.citire_scriere import functie_citire, functie_scriere, validare_cnp
 from datetime import datetime
-from typing import Optional, Dict, Union
+from typing import Optional, Dict, Union, Any, List
 
 def adauga_persoane() -> None:
     """
@@ -258,10 +258,6 @@ def stergere_persoane(cauta: str) -> None:
         print(f'Nu s-a gasit persoana cu CNP: {cauta}')
     functie_scriere(date_noi)
 
-from typing import List, Dict, Any
-import os
-import csv
-from datetime import datetime
 
 def fluturas(cauta: str) -> None:
     """
