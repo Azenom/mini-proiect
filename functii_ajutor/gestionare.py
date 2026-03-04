@@ -258,7 +258,6 @@ def stergere_persoane(cauta: str) -> None:
         print(f'Nu s-a gasit persoana cu CNP: {cauta}')
     functie_scriere(date_noi)
 
-
 def fluturas(cauta: str) -> None:
     """
     Generează un fluturaș salarial pentru o persoană identificată prin CNP.
