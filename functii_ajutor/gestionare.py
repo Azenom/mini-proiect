@@ -100,16 +100,27 @@ def adauga_persoane() -> None:
             print("Datele au fost salvate, te vei intoarce la meniul principal!")
             flag = False
 
-def cauta_persoane(cauta: str) -> Optional[Dict[str, Union[str,int,float]]]:
+def cauta_persoane(cauta: str) -> Optional[Dict[str, Union[str, int, float]]]:
     """
-    Cauta o persoana dupa CNP si returneaza dictionarul cu datele acesteia.
+    Caută o persoană după CNP.
+
+    Parametri:
+        cauta (str): CNP-ul persoanei căutate.
+
+    Returnează:
+        Optional[Dict[str, Union[str, int, float]]]: 
+            Dicționarul cu datele persoanei dacă este găsită,
+            altfel None.
+
+    Efecte secundare:
+        Afișează în consolă datele persoanei găsite sau
+        un mesaj dacă persoana nu există.
     """
     date = functie_citire()
     for elem in date:
         if elem['CNP'] == cauta:
             print(elem)
             return elem
-
     print(f'Nu s-a găsit persoana cu CNP: {cauta}')
 
 def modificare_persoane(cauta: str) -> None:
