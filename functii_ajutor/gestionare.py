@@ -21,38 +21,37 @@ def adauga_persoane() -> None:
     Returns:
         None
     """
-    # Verifica daca fisierul exista si daca da Încarcă lista existentă sau daca nu creează creaza o lista noua
+
     if os.path.exists("lista_angajati.json"):
-        persoane = functie_citire()
+        persoane: list[dict[str, str | int | float]] = functie_citire()
     else:
-        persoane = []
-    
-    # Incarc toate CNP-urile intr-o lista pentru verificare unicitate CNP
-    lista_cnp = []
-    for cnp in persoane :
+        persoane: list[dict[str, str | int | float]] = []
+
+    lista_cnp: list[str] = []
+
+    for cnp in persoane:
         lista_cnp.append(cnp['CNP'])
-    
-    flag = True
+
+    flag: bool = True
+
     while flag:
-        # CNP ----------------------
+
         while True:
-            var = input("CNP: ")
-            if validare_cnp(var) and var not in lista_cnp :
-                cnp = var
+            var: str = input("CNP: ")
+            if validare_cnp(var) and var not in lista_cnp:
+                cnp: str = var
                 lista_cnp.append(var)
                 break
-            elif var in lista_cnp :
+            elif var in lista_cnp:
                 print('CNP-ul exista deja !')
 
-        # Nume și prenume ----------------------
-        nume = input("Nume: ").capitalize()
-        prenume = input("Prenume: ").capitalize()
+        nume: str = input("Nume: ").capitalize()
+        prenume: str = input("Prenume: ").capitalize()
 
-        # Varsta ----------------------
         while True:
             try:
-                varsta = int(input("Varsta: "))
-                if varsta <= 17 :
+                varsta: int = int(input("Varsta: "))
+                if varsta <= 17:
                     print('Varsta minima este 18 ani !')
                     continue
                 if varsta > 117:
@@ -62,10 +61,9 @@ def adauga_persoane() -> None:
             except ValueError:
                 print("Varsta trebuie sa fie un numar!")
 
-        # Salariu cu minim ----------------------
         while True:
             try:
-                salariu = float(input("Salariu: "))
+                salariu: float = float(input("Salariu: "))
                 if salariu <= 4050:
                     print("Salariul trebuie sa fie mai mare ca minimul pe economie (4050)")
                     continue
@@ -73,18 +71,17 @@ def adauga_persoane() -> None:
             except ValueError:
                 print("Salariu trebuie sa fie un numar!")
 
-        # Departament și senioritate ----------------------
-        departament = input("Departament: ").capitalize()
+        departament: str = input("Departament: ").capitalize()
+
         while True:
-            var = input("Senioritate (Junior, Mid, Senior): ").capitalize()
-            if var == 'Junior' or var =='Mid' or var=='Senior':
-                senioritate = var
+            var: str = input("Senioritate (Junior, Mid, Senior): ").capitalize()
+            if var == 'Junior' or var == 'Mid' or var == 'Senior':
+                senioritate: str = var
                 break
-            else : 
+            else:
                 print(f'Nu s-a gasit senioritatea {var} introdusa !')
 
-        # Creează dictionarul persoana și îl adaugă în listă ----------------------
-        persoana = {
+        persoana: dict[str, str | int | float] = {
             "CNP": cnp,
             "Nume": nume,
             "Prenume": prenume,
@@ -93,13 +90,12 @@ def adauga_persoane() -> None:
             "Departament": departament,
             "Senioritate": senioritate
         }
+        # Update dictionar in lista de persoane
         persoane.append(persoana)
-
-        # Salvează lista de dictionare în JSON ----------------------
+        # Scriere in fisier
         functie_scriere(persoane)
 
-        # Continuare daca se doreste ----------------------
-        opt = input("Doresti sa mai adaugi persoane? Da / Nu: ").strip().lower()
+        opt: str = input("Doresti sa mai adaugi persoane? Da / Nu: ").strip().lower()
         if opt == "nu":
             print("Datele au fost salvate, te vei intoarce la meniul principal!")
             flag = False
