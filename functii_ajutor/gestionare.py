@@ -261,39 +261,70 @@ def stergere_persoane(cauta: str) -> None:
         print(f'Nu s-a gasit persoana cu CNP: {cauta}')
     functie_scriere(date_noi)
 
+from typing import List, Dict, Any
+import os
+import csv
+from datetime import datetime
+
 def fluturas(cauta: str) -> None:
     """
-    Genereaza fluturas salarial pentru o persoana, calculand salariul net si scriind intr-un CSV.
-    Formula : Salariu Net = Salariu Brut - CAS (25%) - CASS (10%) - Impozit ( 10% din (Salariu Brut - CAS (25%) - CASS (10%) ) )
+    Generează un fluturaș salarial pentru o persoană identificată prin CNP.
+
+    Funcția caută persoana în lista returnată de `functie_citire()`,
+    calculează salariul net conform formulei:
+
+        Salariu Net = Salariu Brut
+                      - CAS (25%)
+                      - CASS (10%)
+                      - Impozit (10% din (Salariu Brut - CAS - CASS))
+
+    Dacă persoana este găsită, datele sunt salvate într-un fișier CSV
+    (fisiere_output/fluturas.csv), împreună cu data și ora generării.
+
+    Parameters
+    ----------
+    cauta : str
+        CNP-ul persoanei pentru care se generează fluturașul salarial.
+
+    Returns
+    -------
+    None
+        Funcția nu returnează nimic. Scrie rezultatul în fișier și afișează
+        un mesaj în consolă.
     """
-    persoane = functie_citire()
-    date = []
-    flag = False
-    for elem in persoane : 
-        if elem['CNP']== cauta :
+    persoane: List[Dict[str, Any]] = functie_citire()
+    date: List[List[str]] = []
+    flag: bool = False
+
+    for elem in persoane:
+        if elem['CNP'] == cauta:
             # unesc nume si prenume intr-o singura variabila
-            nume_prenume = elem['Nume'] + " " + elem["Prenume"]
-            salariu = elem['Salariu']
-            # calculez salariul net si apoi il converstc in str ca sa apara si cuvantul : ron la final
-            salar = salariu - 0.25 * salariu - 0.1 * salariu - 0.1 * (salariu - 0.25 * salariu - 0.1 * salariu)
-            salariu_net = str(salar) + " ron"
+            nume_prenume: str = elem['Nume'] + " " + elem["Prenume"]
+            salariu: float = elem['Salariu']
+
+            # calculez salariul net si apoi il convertesc in str ca sa apara si cuvantul : ron la final
+            salar: float = salariu - 0.25 * salariu - 0.1 * salariu - 0.1 * (salariu - 0.25 * salariu - 0.1 * salariu)
+            salariu_net: str = str(salar) + " ron"
+
             # adaug si data la final de lista ce contine nume si prenume, cnp, salariul net, data curenta
-            data_curenta = datetime.now().strftime('%H:%M %d-%m-%Y')
+            data_curenta: str = datetime.now().strftime('%H:%M %d-%m-%Y')
             date.append([nume_prenume, elem['CNP'], salariu_net, data_curenta])
             flag = True
             break
         
-    if flag :
+    if flag:
         # sa scrie fisierul si specific in ce folder 
-        path = 'fisiere_output/fluturas.csv'
-        exista_fisier = os.path.exists(path) # boolean
+        path: str = 'fisiere_output/fluturas.csv'
+        exista_fisier: bool = os.path.exists(path)
+
         with open(path, 'a', newline='', encoding='utf-8') as my_file:
             writer = csv.writer(my_file)
-            if not exista_fisier or os.path.getsize(path) == 0:     
+            if not exista_fisier or os.path.getsize(path) == 0:
                 # scriu header-ul doar dacă fișierul nu există sau este gol
                 writer.writerow(["Nume Prenume", "CNP", "Salariu Net", "Data Curenta"])
             writer.writerows(date)
+
         print(f'Verifica fisierul din {os.path.abspath(path)} pentru detalii!')
-    else :
+    else:
         print(f"Nu s-a gasit CNP-ul : {cauta}")
     
