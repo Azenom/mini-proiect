@@ -12,9 +12,16 @@ def functie_scriere(param):
 
 def validare_cnp(cnp: str) -> bool:
     """
-    Verifica daca un CNP este valid:
-    - contine doar cifre
-    - are exact 13 caractere
+    Verifică dacă un CNP este valid din punct de vedere structural.
+
+    Parametri:
+        cnp (str): Codul Numeric Personal care trebuie verificat.
+
+    Returnează:
+        bool: True dacă:
+              - conține doar cifre
+              - are exact 13 caractere
+              False în caz contrar (și afișează un mesaj de eroare).
     """
     if cnp.isdigit() and len(cnp) == 13 :
         return True
