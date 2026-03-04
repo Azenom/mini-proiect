@@ -5,8 +5,21 @@ from typing import Optional, Dict, Union
 
 def adauga_persoane() -> None:
     """
-    Permite adăugarea manuală a unei persoane în lista de angajați.
-    Verifică validitatea datelor (CNP, varsta, salariu, senioritate) și salvează lista actualizată în JSON.
+    Adaugă manual una sau mai multe persoane în lista de angajați.
+
+    Funcționalitate:
+        - Verifică existența fișierului `lista_angajati.json`.
+        - Încarcă datele existente sau creează o listă nouă.
+        - Validează unicitatea și corectitudinea CNP-ului.
+        - Verifică:
+            * vârsta minimă (>= 18 ani)
+            * salariul minim (> 4050)
+            * senioritatea (Junior, Mid, Senior)
+        - Salvează lista actualizată în fișier JSON.
+        - Permite adăugarea repetată de persoane până la oprirea utilizatorului.
+
+    Returns:
+        None
     """
     # Verifica daca fisierul exista si daca da Încarcă lista existentă sau daca nu creează creaza o lista noua
     if os.path.exists("lista_angajati.json"):
@@ -81,10 +94,6 @@ def adauga_persoane() -> None:
             "Senioritate": senioritate
         }
         persoane.append(persoana)
-
-        # Fac update la lista de CNP-uri inca o data ----------------------
-        # for cnp in persoane :
-        #     lista_cnp.append(cnp['CNP'])
 
         # Salvează lista de dictionare în JSON ----------------------
         functie_scriere(persoane)
